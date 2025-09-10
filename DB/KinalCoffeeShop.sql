@@ -13,6 +13,14 @@ create table UsuariosConCredito(
     constraint pk_cliente primary key (idUsuariosCredito)
 );
 
+create table Alumnos(
+    idAlumno int auto_increment,
+    nombre varchar(64) not null,
+    apellido varchar(64) not null,
+    carnet varchar(8) unique not null,      
+    constraint pk_alumno primary key (idAlumno)
+);
+
 create table Productos(
     idProducto int auto_increment,
     nombre varchar(64) not null,
@@ -28,8 +36,10 @@ create table Pedidos(
     total decimal(10,2) not null,
     estado enum('Pendiente','Preparando','Entregado','Cancelado') default 'Pendiente',
     idUsuariosCredito int,
-    constraint fk_pedido_cliente foreign key (idUsuariosCredito)
+    constraint fk_pedido_usuariosConCredito foreign key (idUsuariosCredito)
         references UsuariosConCredito(idUsuariosCredito),
+    constraint fk_pedido_alumno foreign key (idAlumno)
+        references Alumnos(idAlumno),
     constraint pk_pedido primary key (idPedido)
 );
 
