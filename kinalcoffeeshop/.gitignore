@@ -18,6 +18,11 @@ target/
 *.iws
 *.iml
 *.ipr
+# Archivos de configuración de IntelliJ
+misc.xml
+vcs.xml
+encoding.xml
+workspace.xml
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +36,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignorar archivos XML generados por otros programas de forma general
+*.xml
+!pom.xml
+!build.xml
