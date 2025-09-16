@@ -10,6 +10,7 @@ import org.asco_devs.kinalcoffeeshop.persistence.entity.ProductoEntity;
 import org.asco_devs.kinalcoffeeshop.persistence.mapper.ProductoMapper;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -39,6 +40,7 @@ public class ProductoEntityRepository implements ProductoRepository {
             throw new ProductAlreadyExistException(dto.name());
         }
         ProductoEntity productoEntity = this.productoMapper.toEntity(dto);
+        productoEntity.setFechaDeIngreso(LocalDate.now());
         this.crudProductoEntity.save(productoEntity);
         return this.productoMapper.toDto(productoEntity);
     }
