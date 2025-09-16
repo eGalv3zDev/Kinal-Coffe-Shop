@@ -1,6 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.dto;
 
 import jakarta.validation.constraints.*;
+import org.asco_devs.kinalcoffeeshop.persistence.entity.CategoriaEntity;
 
 import java.time.LocalDate;
 
@@ -17,6 +18,6 @@ public record ProductoDto(
         LocalDate entryDate,
         @Future(message = "La fecha de expiracion debe ser futura")
         LocalDate expirationDate,
-        Integer categoryId
+        CategoriaEntity categoryId
 ) {
 }

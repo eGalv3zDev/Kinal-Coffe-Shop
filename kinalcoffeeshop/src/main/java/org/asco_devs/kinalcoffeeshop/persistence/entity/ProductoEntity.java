@@ -31,5 +31,5 @@ public class ProductoEntity {
     private LocalDate fechaDeExpiracion;
     @ManyToOne
     @JoinColumn(name = "idCategoria", nullable = false)
-    private Integer idCategoria;
+    private CategoriaEntity idCategoria;
 }

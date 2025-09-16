@@ -6,6 +6,6 @@ public record ModProductoDto(
         String name,
         String description,
         Double price,
-        Integer categoryId
+        CategoriaEntity categoryId
 ) {
 }
