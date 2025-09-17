@@ -3,11 +3,10 @@ package org.asco_devs.kinalcoffeeshop.persistence;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.AlumnoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.ModAlumnoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.exception.AlumnoAlreadyExistException;
-import org.asco_devs.kinalcoffeeshop.dominio.exception.ProductNotExistException;
+import org.asco_devs.kinalcoffeeshop.dominio.exception.AlumnoNotExistException;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.AlumnoRepository;
 import org.asco_devs.kinalcoffeeshop.persistence.crud.CrudAlumnoEntity;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.AlumnoEntity;
-import org.asco_devs.kinalcoffeeshop.persistence.entity.ProductoEntity;
 import org.asco_devs.kinalcoffeeshop.persistence.mapper.AlumnoMapper;
 import org.springframework.stereotype.Repository;
 
@@ -47,7 +46,7 @@ public class AlumnoEntityRepository implements AlumnoRepository {
     public AlumnoDto modificarAlumno(Long idAlumno, ModAlumnoDto mod) {
         AlumnoEntity alumnoEntity = this.crudAlumnoEntity.findById(idAlumno).orElse(null);
         if(alumnoEntity == null) {
-            throw new ProductNotExistException(idAlumno);
+            throw new AlumnoNotExistException(idAlumno);
         }
         this.alumnoMapper.modificarEntityFromDto(mod, alumnoEntity);
         return this.alumnoMapper.toDto(this.crudAlumnoEntity.save(alumnoEntity));
@@ -57,7 +56,7 @@ public class AlumnoEntityRepository implements AlumnoRepository {
     public void eliminarAlumno(Long idAlumno) {
         AlumnoEntity alumnoEntity = this.crudAlumnoEntity.findById(idAlumno).orElse(null);
         if (alumnoEntity == null) {
-            throw new ProductNotExistException(idAlumno);
+            throw new AlumnoNotExistException(idAlumno);
         } else {
             this.crudAlumnoEntity.deleteById(idAlumno);
         }

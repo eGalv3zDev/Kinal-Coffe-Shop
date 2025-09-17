@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.CategoriaDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.ModProductoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.ProductoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.ProductoService;

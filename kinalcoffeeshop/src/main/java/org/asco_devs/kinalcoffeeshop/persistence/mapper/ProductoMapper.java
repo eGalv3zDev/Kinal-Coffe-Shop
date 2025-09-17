@@ -25,6 +25,9 @@ public interface ProductoMapper {
     List<ProductoDto> toDto(Iterable<ProductoEntity> entities);
 
     @InheritConfiguration
+    @Mapping(source = "name", target = "nombre")
+    @Mapping(source = "description", target = "descripcion")
+    @Mapping(source = "price", target = "precio")
     @Mapping(source = "stock", target = "cantidad")
     @Mapping(source = "entryDate", target = "fechaDeIngreso")
     @Mapping(source = "expirationDate", target = "fechaDeExpiracion")

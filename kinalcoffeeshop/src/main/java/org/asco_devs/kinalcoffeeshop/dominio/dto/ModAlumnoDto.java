@@ -2,6 +2,7 @@ package org.asco_devs.kinalcoffeeshop.dominio.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public record ModAlumnoDto(
@@ -10,6 +11,6 @@ public record ModAlumnoDto(
     String carnet,
     String email,
     String genre,
-    Date dateBirth,
+    LocalDate dateBirth,
     String password
 ){}

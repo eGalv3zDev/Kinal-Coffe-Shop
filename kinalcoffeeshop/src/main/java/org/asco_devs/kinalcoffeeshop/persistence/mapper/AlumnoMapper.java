@@ -25,6 +25,8 @@ public interface AlumnoMapper {
     List<AlumnoDto> toDto(Iterable<AlumnoEntity> entities);
 
     @InheritInverseConfiguration
+    @Mapping(source = "id", target = "idAlumno")
+    @Mapping(source = "dateBirth", target = "fechaNacimiento")
     @Mapping(source="genre", target="genero", qualifiedByName = "generarGenero")
     AlumnoEntity toEntity(AlumnoDto dto);
 
