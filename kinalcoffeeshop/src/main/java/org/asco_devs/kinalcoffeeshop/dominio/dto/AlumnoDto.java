@@ -2,6 +2,7 @@ package org.asco_devs.kinalcoffeeshop.dominio.dto;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
@@ -17,7 +18,7 @@ import java.util.Date;
         String email,
         @NotBlank(message = "El genero no puede estar vacio")
         String genre,
-        @NotBlank(message = "La fecha de nacimiento no puede estar vacia")
+        @NotNull(message = "La fecha de nacimiento no puede estar vacia")
         Date dateBirth,
         @NotBlank(message = "La contraseña no puede estar vacia")
         String password

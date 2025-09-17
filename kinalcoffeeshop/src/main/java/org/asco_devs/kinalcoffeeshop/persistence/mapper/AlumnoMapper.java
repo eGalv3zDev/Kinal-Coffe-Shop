@@ -13,6 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {GenreMapper.class})
 public interface AlumnoMapper {
 
+    @Mapping(source = "idAlumno", target = "id")
     @Mapping(source = "nombre", target = "name")
     @Mapping(source = "apellido", target = "lastName")
     @Mapping(source = "carnet", target = "carnet")
