@@ -43,7 +43,7 @@ VALUES
     ('Ana', 'Hernández', '50211122233', 'ana.hernandez@correo.com', 'femenino', '2000-12-01', 'segura321'),
     ('Pedro', 'Ramírez', '50233344455', 'pedro.ramirez@correo.com', 'masculino', '1987-05-09', 'pass000'),
     ('Sofía', 'Díaz', '50277788899', 'sofia.diaz@correo.com', 'femenino', '1999-08-25', 'mypassword'),
-    ('Diego', 'Fernández', NULL, 'diego.fernandez@correo.com', 'masculino', '1996-02-17', 'abc123'),
+    ('Diego', 'Fernández', 50277788895, 'diego.fernandez@correo.com', 'masculino', '1996-02-17', 'abc123'),
     ('Lucía', 'Castillo', '50222233344', 'lucia.castillo@correo.com', 'femenino', '2001-11-30', 'luciaPass'),
     ('Andrés', 'Morales', '50299900011', 'andres.morales@correo.com', 'masculino', '1994-07-12', 'keypass'),
     ('Valeria', 'Torres', '50244455566', 'valeria.torres@correo.com', 'femenino', '1997-04-06', 'valepass');

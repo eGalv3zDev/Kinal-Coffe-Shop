@@ -15,7 +15,7 @@ public record PedidoDto(
         LocalDateTime date,
         @NotNull(message = "El total no puede estar vacio")
         @DecimalMin(value = "0.01", message = "El total debe ser mayor a 0")
-        BigDecimal total,
+        Double total,
         @NotBlank(message = "El estado no puede estar vacio")
         String state,
         Long studentId,
