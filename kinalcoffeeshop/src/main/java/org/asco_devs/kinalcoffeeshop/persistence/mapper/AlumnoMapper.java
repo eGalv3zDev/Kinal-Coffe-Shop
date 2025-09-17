@@ -19,14 +19,14 @@ public interface AlumnoMapper {
     @Mapping(source = "carnet", target = "carnet")
     @Mapping(source = "correo", target = "email")
     @Mapping(source = "genero", target = "genre")
-    @Mapping(source = "fechaNacimiento", target = "dateBirth")
+    @Mapping(source = "fechaNacimiento", target = "birthDate")
     @Mapping(source = "contraseña", target = "password")
     AlumnoDto toDto(AlumnoEntity entity);
     List<AlumnoDto> toDto(Iterable<AlumnoEntity> entities);
 
     @InheritInverseConfiguration
     @Mapping(source = "id", target = "idAlumno")
-    @Mapping(source = "dateBirth", target = "fechaNacimiento")
+    @Mapping(source = "birthDate", target = "fechaNacimiento")
     @Mapping(source="genre", target="genero", qualifiedByName = "generarGenero")
     AlumnoEntity toEntity(AlumnoDto dto);
 
@@ -36,7 +36,7 @@ public interface AlumnoMapper {
     @Mapping(source = "carnet", target = "carnet")
     @Mapping(source = "email", target = "correo")
     @Mapping(source = "genre", target = "genero")
-    @Mapping(source = "dateBirth", target = "fechaNacimiento")
+    @Mapping(source = "birthDate", target = "fechaNacimiento")
     @Mapping(source = "password", target = "contraseña")
     void modificarEntityFromDto(ModAlumnoDto mod, @MappingTarget AlumnoEntity entity);
 }

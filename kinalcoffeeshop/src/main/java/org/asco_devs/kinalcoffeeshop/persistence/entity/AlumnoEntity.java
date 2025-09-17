@@ -12,18 +12,18 @@ public class AlumnoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAlumno;
-    @Column(length = 64, nullable = false)
+    @Column(name = "nombre", length = 64, nullable = false)
     private String nombre;
-    @Column(length = 64, nullable = false)
+    @Column(name = "apellido", length = 64, nullable = false)
     private String apellido;
-    @Column(length = 16, unique = true, nullable = false)
+    @Column(name = "carnet", length = 16, unique = true, nullable = false)
     private String carnet;
-    @Column(length = 128)
+    @Column(name = "correo", length = 128)
     private String correo;
-    @Column(length = 10, nullable = false)
+    @Column(name = "genero", length = 10, nullable = false)
     private String genero;
     @Column(name = "fechaNacimiento")
     private LocalDate fechaNacimiento;
-    @Column(length = 128, nullable = false)
+    @Column(name = "contrasena", length = 128, nullable = false)
     private String contraseña;
 }

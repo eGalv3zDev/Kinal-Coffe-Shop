@@ -20,7 +20,7 @@ import java.util.Date;
         @NotBlank(message = "El genero no puede estar vacio")
         String genre,
         @NotNull(message = "La fecha de nacimiento no puede estar vacia")
-        LocalDate dateBirth,
+        LocalDate birthDate,
         @NotBlank(message = "La contraseña no puede estar vacia")
         String password
 ){}

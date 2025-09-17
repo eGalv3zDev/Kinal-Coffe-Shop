@@ -11,6 +11,6 @@ public record ModAlumnoDto(
     String carnet,
     String email,
     String genre,
-    LocalDate dateBirth,
+    LocalDate birthDate,
     String password
 ){}
