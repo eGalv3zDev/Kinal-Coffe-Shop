@@ -7,21 +7,30 @@ import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Mappings;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CategoriaMapper {
 
-    @Mapping(source = "idCategoria", target="id" )
-    @Mapping(source = "nombre", target="name" )
+    @Mappings({
+            @Mapping(source = "idCategoria", target="id"),
+            @Mapping(source = "nombre", target="name")
+    })
     CategoriaDto toDto(CategoriaEntity entity);
+
     List<CategoriaDto> toDto(Iterable<CategoriaEntity> entities);
 
-    @InheritConfiguration
-    @Mapping(source = "name", target="nombre")
+    @Mappings({
+            @Mapping(source = "id", target="idCategoria"),
+            @Mapping(source = "name", target="nombre")
+    })
     CategoriaEntity toEntity(CategoriaDto dto);
 
-    @Mapping(source = "name", target="nombre")
+    @Mappings({
+            @Mapping(target = "idCategoria", ignore = true),
+            @Mapping(source = "name", target="nombre")
+    })
     void modificarEntityFromDto(ModCategoriaDto mod, @MappingTarget CategoriaEntity entity);
 }
