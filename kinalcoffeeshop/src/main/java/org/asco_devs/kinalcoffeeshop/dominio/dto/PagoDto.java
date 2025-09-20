@@ -9,7 +9,7 @@ public record PagoDto(
         Long id,
         @NotNull(message = "El monto no puede estar vacio")
         @DecimalMin(value = "0.01", message = "El monto debe ser mayor a 0")
-        BigDecimal amount,
+        Double amount,
         @NotNull(message = "El tipo de pago no puede estar vacio")
         String type,
         @NotNull(message = "El ID del pedido no puede estar vacio")
