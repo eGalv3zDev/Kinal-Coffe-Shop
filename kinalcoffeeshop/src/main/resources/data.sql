@@ -22,7 +22,7 @@ VALUES
     ('Sándwich de Pavo', 'Un sándwich de pan integral con pavo, lechuga y tomate.', 6.50, 15, '2026-05-15', '2026-11-15', 4),
     ('Ensalada de Pollo a la Parrilla', 'Una ensalada fresca con pollo a la parrilla.', 7.00, 10, '2026-05-15', '2026-11-15', 4);
 
-insert ignore into Alumnos (nombre, apellido, carnet, correo, genero, fecha_nacimiento, contraseña)
+insert ignore into Alumnos (nombre, apellido, carnet, correo, genero, fecha_nacimiento, contrasena)
 values
     ('Carlos', 'Ramírez', '2021158', 'cramirez-2021158@kinal.edu.gt', 'masculino', '2002-05-14', 'pass123'),
     ('José', 'Martínez', '2022199', 'jmartinez-2022199@kinal.edu.gt', 'masculino', '2001-07-20', 'pass123'),
@@ -74,3 +74,16 @@ VALUES
     ('2025-09-08', 3, 600.00, 'Tarjeta'),
     ('2025-09-09', 4, 75.50, 'Efectivo'),
     ('2025-09-10', 5, 340.00, 'Transferencia');
+
+insert ignore into Facturas (fecha, total, id_pedido)
+values
+    ('2025-09-01 10:00:00', 150.00, 1),
+    ('2025-09-02 11:30:00', 275.50, 2),
+    ('2025-09-03 09:45:00', 320.75, 3),
+    ('2025-09-04 14:20:00', 99.99, 4),
+    ('2025-09-05 12:10:00', 450.00, 5),
+    ('2025-09-06 16:05:00', 210.25, 6),
+    ('2025-09-07 08:50:00', 130.00, 7),
+    ('2025-09-08 13:15:00', 600.00, 8),
+    ('2025-09-09 17:40:00', 75.50, 9),
+    ('2025-09-10 15:25:00', 340.00, 10);
