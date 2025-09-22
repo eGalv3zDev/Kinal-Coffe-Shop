@@ -9,4 +9,5 @@ public interface CrudPedidoEntity extends CrudRepository<PedidoEntity, Long> {
 
     List<PedidoEntity> findByIdAlumno(Long idAlumno);
     List<PedidoEntity> findByIdUsuarioCredito(Long idUsuarioCredito);
+    List<PedidoEntity> findByAlumnoNombre(String nombre);
 }

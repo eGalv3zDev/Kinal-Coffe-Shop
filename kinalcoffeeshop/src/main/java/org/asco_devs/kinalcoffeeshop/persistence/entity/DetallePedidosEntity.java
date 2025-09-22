@@ -5,6 +5,8 @@ import org.asco_devs.kinalcoffeeshop.persistence.entity.ProductoEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "DetallePedidos")
 @Data
@@ -18,7 +20,7 @@ public class DetallePedidosEntity {
     private Integer cantidad;
 
     @Column(precision = 10, scale = 2, nullable = false)
-    private Double subtotal;
+    private BigDecimal subtotal;
 
     @ManyToOne
     @JoinColumn(name = "idPedido", nullable = false)

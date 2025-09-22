@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Pedidos")
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PedidoEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPedido;
@@ -27,7 +30,7 @@ public class PedidoEntity {
     @Column(name = "estado", length = 15, nullable = false)
     private String estado;
 
-    @Column(name = "idAlumno", nullable = true)
+    @Column(name = "idAlumno", nullable = false)
     private Long idAlumno;
 
     @Column(name = "idUsuarioCredito", nullable = true)
@@ -40,4 +43,7 @@ public class PedidoEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idUsuarioCredito", insertable = false, updatable = false)
     private UsuarioConCreditoEntity usuarioConCredito;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<DetallePedidosEntity> detalles = new ArrayList<>();
 }
