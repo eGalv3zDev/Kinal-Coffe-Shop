@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/detallefacturas")
-@Tag(name = "DetalleFacturaController", description = "API de gestión de Detalle Facturas")
+@Tag(name = "DetalleFacturaController", description = "API de gestión de detalle facturas")
 public class DetalleFacturaController {
     @Autowired
     private DetalleFacturaService detalleFacturaService;

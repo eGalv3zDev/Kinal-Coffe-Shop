@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/facturas")
-@Tag(name="FacturaController", description = "API de gestion de Facturas")
+@Tag(name="FacturaController", description = "API de gestion de facturas")
 public class FacturaController {
     @Autowired
     private FacturaService facturaService;
@@ -34,8 +34,8 @@ public class FacturaController {
 
     @GetMapping("{idFactura}")
     @Operation(
-            summary = "Buscar una factura por su ID",
-            description = "Retorna una factura segun su ID",
+            summary = "Buscar una factura por su codigo",
+            description = "Retorna una factura segun su codigo",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Factura encontrada"),
                     @ApiResponse(responseCode = "404", description = "Factura no encontrada"),
