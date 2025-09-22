@@ -19,6 +19,8 @@ public class AlumnoService {
         return this.alumnoRepository.obtenerAlumnos();
     }
 
+    public AlumnoDto buscarCarnet(String carnet) {return this.alumnoRepository.buscarPorCarnet(carnet);}
+
     public AlumnoDto buscarCodigo(Long codigo){
         return this.alumnoRepository.buscarPorId(codigo);
     }

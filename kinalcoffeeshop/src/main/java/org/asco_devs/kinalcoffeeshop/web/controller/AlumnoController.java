@@ -46,6 +46,21 @@ public class AlumnoController {
         return ResponseEntity.ok(this.alumnoService.buscarCodigo(idAlumno));
     }
 
+    @GetMapping("carnet/{carnet}")
+    @Operation(
+            summary = "Buscar un alumno por su codigo de carnet",
+            description = "Retorna un alumno segun su identificador de carnet proporcionado por el colegio",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Alumno encontrado"),
+                    @ApiResponse(responseCode = "404", description = "Alumno no encontrado"),
+                    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+    )
+    public ResponseEntity<AlumnoDto> buscarPorCarnet(@Parameter(description = "Carnet del ALUMNO a recuperar", example = "2023220" )
+                                                                @PathVariable String carnet){
+        return ResponseEntity.ok(this.alumnoService.buscarCarnet(carnet));
+    }
+
     @PostMapping
     public ResponseEntity<AlumnoDto> guardarAlumno(@RequestBody @Valid AlumnoDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(this.alumnoService.guardarAlumno(dto));

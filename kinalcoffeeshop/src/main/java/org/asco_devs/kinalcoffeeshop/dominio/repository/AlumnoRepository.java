@@ -8,6 +8,7 @@ import java.util.List;
 public interface AlumnoRepository {
     List<AlumnoDto> obtenerAlumnos();
     AlumnoDto buscarPorId(Long idAlumno);
+    AlumnoDto buscarPorCarnet(String carnet);
     AlumnoDto guardarAlumno(AlumnoDto dto);
     AlumnoDto modificarAlumno(Long idAlumno, ModAlumnoDto mod);
     void eliminarAlumno(Long idAlumno);
