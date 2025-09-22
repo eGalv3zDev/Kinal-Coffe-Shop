@@ -1,10 +1,29 @@
-HELP.md
+# Archivos y carpetas de compilación
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+build-output/
 
-### STS ###
+# Archivos generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Visual Studio Code
+.vscode/
+
+# STS
 .apt_generated
 .classpath
 .factorypath
@@ -13,31 +32,10 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-# Archivos de configuración de IntelliJ
-misc.xml
-vcs.xml
-encoding.xml
-workspace.xml
-
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-# Ignorar archivos XML generados por otros programas de forma general
-*.xml
-!pom.xml
-!build.xml
