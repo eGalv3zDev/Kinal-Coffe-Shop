@@ -1,5 +1,6 @@
 package org.asco_devs.kinalcoffeeshop.web.controller;
 
+import org.asco_devs.kinalcoffeeshop.dominio.dto.DetallePedidosDto;
 import org.asco_devs.kinalcoffeeshop.dominio.exception.DetallePedidosExistsException;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.ModDetallePedidosDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.DetallePedidosService;
