@@ -3,7 +3,7 @@ package org.asco_devs.kinalcoffeeshop.persistence.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.ConditionalOnIssuerLocationJwtDecoder;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,10 +12,11 @@ import java.time.LocalDate;
 @Table(name = "HistorialCreditos")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class HistorialCreditoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idHistorialCredito;
+    private Long idHistorial;
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
     @Column(name = "tipoMovimiento", nullable = false)
