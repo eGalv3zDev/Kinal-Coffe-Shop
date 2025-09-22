@@ -5,12 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.lang.Error;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
 
     @ExceptionHandler(DetallePedidosNotExistsException.class)
     public ResponseEntity<Error> handleException(DetallePedidosNotExistsException ex) {
-        Error error = new Error("detallepedido-no-existe", ex.getMessage());
+        Error error = new Error();
         return ResponseEntity.badRequest().body(error);
     }
 }

@@ -1,5 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.persistence.entity;
 
+import org.asco_devs.kinalcoffeeshop.persistence.entity.PedidoEntity;
+import org.asco_devs.kinalcoffeeshop.persistence.entity.ProductoEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,9 +22,9 @@ public class DetallePedidosEntity {
 
     @ManyToOne
     @JoinColumn(name = "idPedido", nullable = false)
-    private PedidosEntity pedido;
+    private PedidoEntity pedido;
 
     @ManyToOne
     @JoinColumn(name = "idProducto", nullable = false)
-    private ProductosEntity producto;
+    private ProductoEntity producto;
 }
