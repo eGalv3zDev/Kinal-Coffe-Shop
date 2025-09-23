@@ -4,7 +4,6 @@ import org.asco_devs.kinalcoffeeshop.dominio.dto.AlumnoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.ModAlumnoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.exception.AlumnoAlreadyExistException;
 import org.asco_devs.kinalcoffeeshop.dominio.exception.AlumnoNotExistException;
-import org.asco_devs.kinalcoffeeshop.dominio.exception.AlumnoNotExistExceptionCarnet;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.AlumnoRepository;
 import org.asco_devs.kinalcoffeeshop.persistence.crud.CrudAlumnoEntity;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.AlumnoEntity;

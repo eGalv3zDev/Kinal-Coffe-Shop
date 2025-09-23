@@ -4,9 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Facturas")
@@ -24,5 +28,7 @@ public class FacturasEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPedido", nullable = false)
     private PedidoEntity idPedido;
-
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<DetalleFacturaEntity> detalles = new ArrayList<>();
 }
