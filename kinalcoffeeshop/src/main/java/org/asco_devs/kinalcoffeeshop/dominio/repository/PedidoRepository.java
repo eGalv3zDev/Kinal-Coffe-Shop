@@ -13,5 +13,5 @@ public interface PedidoRepository {
     PedidoDto guardarPedido(PedidoDto dto);
     PedidoDto modificarPedido(Long idPedido, ModPedidoDto mod);
     void eliminarPedido(Long idPedido);
-    List<PedidoEntity> findByAlumnoNombre(String nombre);
+    List<PedidoEntity> findByIdAlumno_Nombre(String nombre);
 }

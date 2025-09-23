@@ -41,7 +41,7 @@ public class PedidoService {
     }
 
     public List<PedidoConDetalleDto> obtenerPedidosPorAlumno(String nombre) {
-        List<PedidoEntity> pedidos = pedidoRepository.findByAlumnoNombre(nombre);
+        List<PedidoEntity> pedidos = pedidoRepository.findByIdAlumno_Nombre(nombre);
         return pedidoMapper.toConDetallesDto(pedidos);
     }
 }

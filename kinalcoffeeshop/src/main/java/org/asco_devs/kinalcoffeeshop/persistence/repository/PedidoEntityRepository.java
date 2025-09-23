@@ -60,7 +60,7 @@ public class PedidoEntityRepository implements PedidoRepository {
     }
 
     @Override
-    public List<PedidoEntity> findByAlumnoNombre(String nombre) {
+    public List<PedidoEntity> findByIdAlumno_Nombre(String nombre) {
         return crudPedidoEntity.findByIdAlumno_Nombre(nombre);
     }
 
