@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.PedidoConDetallesDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.PedidoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.ModPedidoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.PedidoService;
@@ -60,5 +61,10 @@ public class PedidoController {
     public ResponseEntity<Void> eliminarPedido(@PathVariable Long idPedido) {
         this.pedidoService.eliminarPedido(idPedido);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/alumno/{nombre}")
+    public List<PedidoConDetallesDto> getPedidosPorAlumno(@PathVariable String nombre) {
+        return pedidoService.obtenerPedidosPorAlumno(nombre);
     }
 }

@@ -1,8 +1,11 @@
 package org.asco_devs.kinalcoffeeshop.dominio.service;
 
+import org.asco_devs.kinalcoffeeshop.dominio.dto.PedidoConDetallesDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.PedidoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.ModPedidoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.PedidoRepository;
+import org.asco_devs.kinalcoffeeshop.persistence.entity.PedidoEntity;
+import org.asco_devs.kinalcoffeeshop.persistence.mapper.PedidoMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +13,11 @@ import java.util.List;
 @Service
 public class PedidoService {
     private final PedidoRepository pedidoRepository;
+    private final PedidoMapper pedidoMapper;
 
-    public PedidoService(PedidoRepository pedidoRepository) {
+    public PedidoService(PedidoRepository pedidoRepository, PedidoMapper pedidoMapper) {
         this.pedidoRepository = pedidoRepository;
+        this.pedidoMapper = pedidoMapper;
     }
 
     public List<PedidoDto> obtenerPedidos() {
@@ -33,5 +38,10 @@ public class PedidoService {
 
     public void eliminarPedido(Long idPedido) {
         this.pedidoRepository.eliminarPedido(idPedido);
+    }
+
+    public List<PedidoConDetallesDto> obtenerPedidosPorAlumno(String nombre) {
+        List<PedidoEntity> pedidos = pedidoRepository.findByAlumnoNombre(nombre);
+        return pedidoMapper.toConDetallesDto(pedidos);
     }
 }

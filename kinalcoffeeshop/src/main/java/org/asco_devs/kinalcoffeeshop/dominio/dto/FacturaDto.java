@@ -12,7 +12,7 @@ public record FacturaDto(
         LocalDateTime date,
         @Min(value=0, message = "El total no puede ser negativo")
         Double total,
-        PedidoEntity orderId
+        Long orderId
 
 ) {
 }

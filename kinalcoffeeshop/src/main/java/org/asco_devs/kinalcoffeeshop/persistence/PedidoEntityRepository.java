@@ -58,4 +58,10 @@ public class PedidoEntityRepository implements PedidoRepository {
         }
         this.crudPedidoEntity.deleteById(idPedido);
     }
+
+    @Override
+    public List<PedidoEntity> findByAlumnoNombre(String nombre) {
+        return crudPedidoEntity.findByAlumnoNombre(nombre);
+    }
+
 }
