@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.service;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.CuentaDeCreditoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModCuentaDeCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.cuentaDeCredito.CuentaDeCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.cuentaDeCredito.ModCuentaDeCreditoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.CuentaDeCreditoRepository;
 import org.springframework.stereotype.Service;
 

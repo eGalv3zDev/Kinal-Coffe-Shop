@@ -22,7 +22,7 @@ VALUES
     ('Sándwich de Pavo', 'Un sándwich de pan integral con pavo, lechuga y tomate.', 6.50, 15, '2026-05-15', '2026-11-15', 4),
     ('Ensalada de Pollo a la Parrilla', 'Una ensalada fresca con pollo a la parrilla.', 7.00, 10, '2026-05-15', '2026-11-15', 4);
 
-insert ignore into Alumnos (nombre, apellido, carnet, correo, genero, fecha_nacimiento, contrasena)
+insert ignore into Alumnos (nombre, apellido, carnet, correo, genero, fecha_nacimiento, contraseña)
 values
     ('Carlos', 'Ramírez', '2021158', 'cramirez-2021158@kinal.edu.gt', 'masculino', '2002-05-14', 'pass123'),
     ('José', 'Martínez', '2022199', 'jmartinez-2022199@kinal.edu.gt', 'masculino', '2001-07-20', 'pass123'),

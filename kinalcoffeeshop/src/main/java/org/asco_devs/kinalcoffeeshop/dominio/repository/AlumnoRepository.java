@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.repository;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.AlumnoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModAlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.AlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.ModAlumnoDto;
 
 import java.util.List;
 

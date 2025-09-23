@@ -23,9 +23,9 @@ public class HistorialCreditoEntity {
     private String tipoMovimiento;
     @Column(name = "monto", precision = 3, scale = 2, nullable = false)
     private BigDecimal monto;
-//    @ManyToOne
-//    @JoinColumn(name = "idConsumo", nullable = false)
-//    private LineaDeCreditosEntity idConsumo;
+    @ManyToOne
+    @JoinColumn(name = "idConsumo", nullable = false)
+    private LineaDeCreditoEntity idConsumo;
     @ManyToOne
     @JoinColumn(name = "idPago", nullable = false)
     private PagoEntity idPago;

@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.service;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.AlumnoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModAlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.AlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.ModAlumnoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.AlumnoRepository;
 import org.springframework.stereotype.Service;
 

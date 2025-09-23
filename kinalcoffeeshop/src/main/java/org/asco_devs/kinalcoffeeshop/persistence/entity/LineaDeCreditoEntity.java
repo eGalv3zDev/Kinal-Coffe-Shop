@@ -14,21 +14,16 @@ public class LineaDeCreditoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idConsumo")
     private Long idConsumo;
-
     @Column(name = "fecha")
     private LocalDateTime fecha;
-
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
-
     @Column(name = "subtotal", precision = 10, scale = 2, nullable = false)
     private BigDecimal subtotal;
-
     @ManyToOne
     @JoinColumn(name = "idProducto", nullable = false)
-    private ProductoEntity producto;
-
+    private ProductoEntity idProducto;
     @ManyToOne
     @JoinColumn(name = "idCuenta", nullable = false)
-    private CuentaDeCreditoEntity cuenta;
+    private CuentaDeCreditoEntity idCuenta;
 }

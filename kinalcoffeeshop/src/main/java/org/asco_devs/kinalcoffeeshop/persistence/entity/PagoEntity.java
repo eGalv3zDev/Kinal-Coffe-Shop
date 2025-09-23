@@ -21,24 +21,15 @@ public class PagoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPago;
-
     @Column(name = "monto", nullable = false)
     private BigDecimal monto;
-
     @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;
-
     @Column(name = "tipo", length = 15, nullable = false)
     private String tipo;
-
-    @Column(name = "idPedido", nullable = false)
-    private Long idPedido;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPedido", insertable = false, updatable = false)
-    private PedidoEntity pedido;
-
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    private PedidoEntity idPedido;
+    @OneToMany(mappedBy = "idPago", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PagoEntity> pagos = new ArrayList<>();
 }

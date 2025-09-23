@@ -28,7 +28,6 @@ public class FacturasEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPedido", nullable = false)
     private PedidoEntity idPedido;
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "idFactura", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleFacturaEntity> detalles = new ArrayList<>();
 }
