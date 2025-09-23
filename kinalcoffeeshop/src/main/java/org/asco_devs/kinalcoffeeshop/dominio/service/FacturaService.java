@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.service;
 
 import org.asco_devs.kinalcoffeeshop.dominio.dto.factura.FacturaDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.factura.ModFacturaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.factura. ModFacturaDto;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.FacturaRepository;
 import org.springframework.stereotype.Service;
 

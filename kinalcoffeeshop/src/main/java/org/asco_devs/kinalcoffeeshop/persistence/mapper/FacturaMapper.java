@@ -19,6 +19,7 @@ public interface FacturaMapper {
     @Mapping(source = "total", target = "total")
     @Mapping(source = "idPedido", target = "orderId")
     FacturaDto toDto(FacturasEntity entity);
+
     List<FacturaDto> toDto(Iterable<FacturasEntity> entities);
 
     @InheritConfiguration

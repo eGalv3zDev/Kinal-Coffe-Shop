@@ -1,4 +1,4 @@
-package org.asco_devs.kinalcoffeeshop.persistence.repository;
+package org.asco_devs.kinalcoffeeshop.persistence;
 
 import org.asco_devs.kinalcoffeeshop.dominio.dto.factura.FacturaDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.factura.ModFacturaDto;
