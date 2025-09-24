@@ -19,7 +19,7 @@ public interface PedidoMapper {
     @Mapping(source = "idPedido", target = "id")
     @Mapping(source = "fecha", target = "date")
     @Mapping(source = "estado", target = "state")
-    @Mapping(source = "idAlumno", target = "studentId")
+    @Mapping(source = "idAlumno.idAlumno", target = "studentId")
     @Mapping(source = "idUsuarioCredito", target = "creditUserId")
     PedidoDto toDto(PedidoEntity entity);
 

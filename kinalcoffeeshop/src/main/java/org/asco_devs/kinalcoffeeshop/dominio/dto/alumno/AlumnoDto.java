@@ -18,6 +18,6 @@ public record AlumnoDto (
         String genre,
         @NotNull(message = "La fecha de nacimiento no puede estar vacia")
         LocalDate birthDate,
-        @NotBlank(message = "La contraseña no puede estar vacia")
+        @NotBlank(message = "La contrasena no puede estar vacia")
         String password
 ){}

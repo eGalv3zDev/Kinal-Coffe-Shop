@@ -25,5 +25,5 @@ public class AlumnoEntity {
     @Column(name = "fechaNacimiento")
     private LocalDate fechaNacimiento;
     @Column(name = "contrasena", length = 128, nullable = false)
-    private String contraseña;
+    private String contrasena;
 }

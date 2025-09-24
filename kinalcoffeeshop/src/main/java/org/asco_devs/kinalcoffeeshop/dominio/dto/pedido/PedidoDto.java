@@ -17,7 +17,7 @@ public record PedidoDto(
         Double total,
         @NotBlank(message = "El estado no puede estar vacio")
         String state,
-        AlumnoEntity studentId,
+        Long studentId,
         UsuarioConCreditoEntity creditUserId
 ) {
 }

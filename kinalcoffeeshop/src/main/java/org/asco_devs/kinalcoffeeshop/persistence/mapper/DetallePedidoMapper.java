@@ -13,15 +13,20 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface DetallePedidoMapper {
 
-    @Mapping(source = "idPedido.idPedido", target = "orderId")
-    @Mapping(source = "idProducto.idProducto", target = "productId")
+    @Mapping(source = "idDetalle", target = "id")
+    @Mapping(source = "cantidad", target = "stock")
+    @Mapping(source = "subtotal", target = "subTotal")
+    @Mapping(source = "idPedido", target = "orderId")
+    @Mapping(source = "idProducto", target = "productId")
     DetallePedidoDto toDto(DetallePedidoEntity entity);
-
     List<DetallePedidoDto> toDto(Iterable<DetallePedidoEntity> entities);
 
     @InheritInverseConfiguration
-    @Mapping(source = "orderId", target = "idPedido.idPedido")
-    @Mapping(source = "productId", target = "idProducto.idProducto")
+    @Mapping(source = "id", target = "idDetalle")
+    @Mapping(source = "stock", target = "cantidad")
+    @Mapping(source = "subTotal", target = "subtotal")
+    @Mapping(source = "orderId", target = "idPedido")
+    @Mapping(source = "productId", target = "idProducto")
     DetallePedidoEntity toEntity(DetallePedidoDto dto);
 
     @Mapping(source = "stock", target = "cantidad")

@@ -21,7 +21,7 @@ public interface UsuarioConCreditoMapper {
     @Mapping(source = "correo", target = "email")
     @Mapping(source = "genero", target = "gender")
     @Mapping(source = "fechaNacimiento", target = "birthDate")
-    @Mapping(source = "contraseña", target = "password")
+    @Mapping(source = "contrasena", target = "password")
     UsuarioConCreditoDto toDto(UsuarioConCreditoEntity entity);
     List<UsuarioConCreditoDto> toDto(Iterable<UsuarioConCreditoEntity> entities);
 
@@ -35,6 +35,6 @@ public interface UsuarioConCreditoMapper {
     @Mapping(source = "email", target = "correo")
     @Mapping(source = "gender", target = "genero")
     @Mapping(source = "birthDate", target = "fechaNacimiento")
-    @Mapping(source = "password", target = "contraseña")
+    @Mapping(source = "password", target = "contrasena")
     void modificarEntityFromDto(ModUsuarioConCreditoDto mod, @MappingTarget UsuarioConCreditoEntity entity);
 }

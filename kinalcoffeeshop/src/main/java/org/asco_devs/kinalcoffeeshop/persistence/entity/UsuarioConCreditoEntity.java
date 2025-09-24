@@ -25,5 +25,5 @@ public class UsuarioConCreditoEntity {
     @Column(name = "fechaNacimiento")
     private LocalDate fechaNacimiento;
     @Column(length = 128, nullable = false)
-    private String contraseña;
+    private String contrasena;
 }

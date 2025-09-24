@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DetallePedidoRepository {
 
-    List<DetallePedidoDto> obtenerTodo();
+    List<DetallePedidoDto> obtenerDetallePedidos();
 
     DetallePedidoDto buscarPorId(Long idDetalle);
 

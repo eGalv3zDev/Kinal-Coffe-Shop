@@ -21,7 +21,7 @@ public interface AlumnoMapper {
     @Mapping(source = "correo", target = "email")
     @Mapping(source = "genero", target = "genre")
     @Mapping(source = "fechaNacimiento", target = "birthDate")
-    @Mapping(source = "contraseña", target = "password")
+    @Mapping(source = "contrasena", target = "password")
     AlumnoDto toDto(AlumnoEntity entity);
     List<AlumnoDto> toDto(Iterable<AlumnoEntity> entities);
 
@@ -38,6 +38,6 @@ public interface AlumnoMapper {
     @Mapping(source = "email", target = "correo")
     @Mapping(source = "genre", target = "genero")
     @Mapping(source = "birthDate", target = "fechaNacimiento")
-    @Mapping(source = "password", target = "contraseña")
+    @Mapping(source = "password", target = "contrasena")
     void modificarEntityFromDto(ModAlumnoDto mod, @MappingTarget AlumnoEntity entity);
 }

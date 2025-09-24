@@ -24,7 +24,7 @@ public class DetallePedidoEntityRepository implements DetallePedidoRepository {
     }
 
     @Override
-    public List<DetallePedidoDto> obtenerTodo() {
+    public List<DetallePedidoDto> obtenerDetallePedidos() {
         return this.detallePedidoMapper.toDto(this.crudDetallePedidoEntity.findAll());
     }
 

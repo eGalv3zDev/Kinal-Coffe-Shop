@@ -18,8 +18,8 @@ public class DetallePedidoService {
         this.detallePedidoRepository = detallePedidoRepository;
     }
 
-    public List<DetallePedidoDto> obtenerTodo() {
-        return this.detallePedidoRepository.obtenerTodo();
+    public List<DetallePedidoDto> obtenerDetallePedidos() {
+        return this.detallePedidoRepository.obtenerDetallePedidos();
     }
 
     public DetallePedidoDto buscarPorId(Long idDetalle) {

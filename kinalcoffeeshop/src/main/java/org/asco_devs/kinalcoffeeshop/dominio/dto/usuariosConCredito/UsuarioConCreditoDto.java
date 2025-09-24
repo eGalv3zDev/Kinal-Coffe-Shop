@@ -14,6 +14,6 @@ public record UsuarioConCreditoDto(
         @NotBlank(message = "El genero no puede estar vacio")
         String gender,
         Date birthDate,
-        @NotBlank(message = "La contraseña no puede estar vacia")
+        @NotBlank(message = "La contrasena no puede estar vacia")
         String password
 ) {}
