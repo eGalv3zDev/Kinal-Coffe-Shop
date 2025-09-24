@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
         <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/primeone-dark.css"/>
         <style type="text/css">
-            /* Los estilos CSS son los mismos que proporcionaste, asegurando consistencia */
+            /* Los estilos CSS se mantienen igual */
             body {
                 background: linear-gradient(135deg, #1e1e1e 0%, #121212 50%, #0a0a0a 100%);
                 color: #e0e0e0;
@@ -212,31 +212,6 @@
                 box-shadow: 0 0 0 4px rgba(0, 128, 255, 0.1);
                 transform: translateY(-1px);
             }
-            .ui-confirm-dialog {
-                background: linear-gradient(145deg, #f8f9fa, #ffffff) !important;
-                border-radius: 20px !important;
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;
-                border: 2px solid rgba(255, 0, 0, 0.2) !important;
-            }
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            .data-card {
-                animation: fadeInUp 0.6s ease-out;
-            }
-            .data-card:nth-child(even) {
-                animation-delay: 0.1s;
-            }
-            .data-card:nth-child(3n) {
-                animation-delay: 0.2s;
-            }
             @media (max-width: 768px) {
                 .data-grid {
                     grid-template-columns: 1fr;
@@ -267,7 +242,7 @@
                         <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra los pagos del sistema</p>
                     </div>
                     <p:commandButton value="Nuevo Pago" icon="pi pi-plus"
-                                     actionListener="#{pagoControllerWeb.agregarPago}"
+                                     action="#{pagoControllerWeb.agregarPago}"
                                      update="ventana-pago"
                                      oncomplete="PF('ventanaModalPago').show()"/>
                 </div>
@@ -277,15 +252,13 @@
                         <div class="data-card">
                             <div class="card-header">
                                 <div class="card-id">ID: #{pago.id()}</div>
-                                <div class="card-amount">$#{pago.amount()}</div>
+                                <div class="card-amount">Q#{pago.amount()}</div>
                             </div>
 
                             <div class="card-field">
                                 <span class="field-label">Fecha:</span>
                                 <span class="field-value">
-                                    <p:outputLabel value="#{pago.date()}" >
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </p:outputLabel>
+                                    <p:outputLabel value="#{pago.date()}" />
                                 </span>
                             </div>
 
@@ -296,7 +269,7 @@
 
                             <div class="card-field">
                                 <span class="field-label">ID Pedido:</span>
-                                <span class="field-value">#{pago.orderId.idPedido}</span>
+                                <span class="field-value">#{pago.orderId()}</span>
                             </div>
 
                             <div class="card-actions">
