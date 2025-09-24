@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.service;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModProductoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ProductoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.producto.ModProductoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.producto.ProductoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.ProductoRepository;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.service;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.CategoriaDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModCategoriaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.categoria.CategoriaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.categoria.ModCategoriaDto;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
 

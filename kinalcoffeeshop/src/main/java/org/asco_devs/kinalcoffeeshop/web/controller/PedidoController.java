@@ -5,8 +5,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.PedidoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModPedidoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.pedido.PedidoConDetalleDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.pedido.PedidoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.pedido.ModPedidoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,5 +61,10 @@ public class PedidoController {
     public ResponseEntity<Void> eliminarPedido(@PathVariable Long idPedido) {
         this.pedidoService.eliminarPedido(idPedido);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/alumno/{nombre}")
+    public List<PedidoConDetalleDto> getPedidosPorAlumno(@PathVariable String nombre) {
+        return pedidoService.obtenerPedidosPorAlumno(nombre);
     }
 }

@@ -1,8 +1,9 @@
 package org.asco_devs.kinalcoffeeshop.persistence.mapper;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.AlumnoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModAlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.AlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.ModAlumnoDto;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.AlumnoEntity;
+import org.asco_devs.kinalcoffeeshop.persistence.mapper.util.GenreMapper;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

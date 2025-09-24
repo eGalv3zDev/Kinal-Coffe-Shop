@@ -21,8 +21,14 @@ public class FacturasEntity {
     private LocalDateTime fecha;
     @Column(name = "total", precision = 3, scale = 2, nullable = false)
     private BigDecimal total;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPedido", nullable = false)
     private PedidoEntity idPedido;
-
+}
+    @PrePersist
+    protected void onCreate() {
+        if (fecha == null) {
+            fecha = LocalDateTime.now();
+        }
+    }
 }

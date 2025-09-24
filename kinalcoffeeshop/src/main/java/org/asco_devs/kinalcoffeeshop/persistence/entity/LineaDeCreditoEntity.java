@@ -31,4 +31,5 @@ public class LineaDeCreditoEntity {
     @ManyToOne
     @JoinColumn(name = "idCuenta", nullable = false)
     private CuentaDeCreditoEntity cuenta;
+
 }

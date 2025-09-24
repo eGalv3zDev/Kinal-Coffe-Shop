@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.repository;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.UsuarioConCreditoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModUsuarioConCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.usuariosConCredito.UsuarioConCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.usuariosConCredito.ModUsuarioConCreditoDto;
 
 import java.util.List;
 

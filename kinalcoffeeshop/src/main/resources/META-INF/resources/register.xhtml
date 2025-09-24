@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>☕ Registrarse - Kinal Coffee</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --color-primary: #004671;
+            --color-secondary: #004B8C;
+            --color-accent-blue: #0084D4;
+            --color-accent-red: #FF0000;
+            --color-text-light: #F5F5F5;
+            --color-text-dark: #333333;
+            --color-background-card: #FFFFFF;
+            --color-background-page: #EFEFEF;
+            --color-tertiary: #F7E549;
+            --color-highlight: #22E600;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--color-background-page);
+            color: var(--color-text-dark);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23dcdcdc" fill-opacity="0.1"><circle cx="20" cy="20" r="10"/><circle cx="80" cy="80" r="10"/></svg>');
+            background-size: 50px 50px;
+        }
+
+        .register-card {
+            background-color: var(--color-background-card);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--color-primary);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-accent-blue);
+        }
+
+        .register-btn {
+            background-color: var(--color-highlight);
+            color: var(--color-text-dark);
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #1a9e00;
+        }
+
+        .link {
+            display: block;
+            margin-top: 20px;
+            color: var(--color-accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .link:hover {
+            color: var(--color-primary);
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="register-card">
+        <div class="logo">☕</div>
+        <h2>Crea tu cuenta</h2>
+        <p>Regístrate para guardar tus pedidos favoritos y obtener descuentos exclusivos.</p>
+        <h:form style="width: 100%;">
+            <div class="form-group">
+                <h:outputLabel for="name" value="Nombre Completo" styleClass="form-label"/>
+                <h:inputText id="name" styleClass="form-input" required="true" requiredMessage="El nombre es obligatorio."/>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="email" value="Correo Electrónico" styleClass="form-label"/>
+                <h:inputText id="email" styleClass="form-input" required="true" requiredMessage="El correo electrónico es obligatorio."/>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="password" value="Contraseña" styleClass="form-label"/>
+                <h:inputSecret id="password" styleClass="form-input" required="true" requiredMessage="La contraseña es obligatoria."/>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="confirm-password" value="Confirmar Contraseña" styleClass="form-label"/>
+                <h:inputSecret id="confirm-password" styleClass="form-input" required="true" requiredMessage="La confirmación de la contraseña es obligatoria."/>
+            </div>
+            <h:commandButton value="Registrarse" styleClass="register-btn"/>
+        </h:form>
+        <a href="#" class="link">¿Ya tienes una cuenta? Inicia sesión</a>
+    </div>
+</h:body>
+</html>
