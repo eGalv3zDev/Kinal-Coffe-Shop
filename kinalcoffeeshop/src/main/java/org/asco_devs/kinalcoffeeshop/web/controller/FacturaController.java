@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.cuentaDeCredito.CuentaDeCreditoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.factura.FacturaDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.factura.ModFacturaDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.FacturaService;
@@ -42,7 +43,7 @@ public class FacturaController {
             }
     )
     public ResponseEntity<FacturaDto> obtenerPorId(@Parameter(description = "Identificador de la Factura a recuperar", example = "1")
-                                                   @PathVariable Long idFactura) {
+                                                           @PathVariable Long idFactura) {
         return  ResponseEntity.ok(this.facturaService.buscarFacturaPorId(idFactura));
     }
 

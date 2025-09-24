@@ -42,9 +42,9 @@ public class DetalleFacturaController {
                     @ApiResponse(responseCode = "500", description = "Error interno del servidor")
             }
     )
-    public ResponseEntity<DetalleFacturaDto> buscarPorId(@Parameter(description = "Identificador del detalle de la factura a recuperar", example = "1")
-                                                         @PathVariable Long idDetalleFactura){
-        return ResponseEntity.ok(this.detalleFacturaService.buscarPorId(idDetalleFactura));
+    public ResponseEntity<DetalleFacturaDto> obtenerPorId(@Parameter(description = "Identificador de el Detalle de  la Factura a recuperar", example = "1")
+                                                           @PathVariable Long idDetalleFactura) {
+        return  ResponseEntity.ok(this.detalleFacturaService.buscarPorId(idDetalleFactura));
     }
 
     @PostMapping

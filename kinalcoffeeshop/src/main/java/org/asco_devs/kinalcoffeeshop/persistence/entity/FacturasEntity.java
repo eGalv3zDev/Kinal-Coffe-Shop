@@ -19,7 +19,7 @@ public class FacturasEntity {
     private Long idFactura;
     @Column(name = "fecha",nullable = false)
     private LocalDateTime fecha;
-    @Column(name = "total", precision = 3, scale = 2, nullable = false)
+    @Column(name = "total", precision = 10, scale = 2, nullable = false)
     private BigDecimal total;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPedido", nullable = false)

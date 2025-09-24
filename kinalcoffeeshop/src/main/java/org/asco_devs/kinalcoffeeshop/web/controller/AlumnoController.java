@@ -41,9 +41,9 @@ public class AlumnoController {
                     @ApiResponse(responseCode = "500", description = "Error interno del servidor")
             }
     )
-    public ResponseEntity<AlumnoDto> buscarPorId(@Parameter(description = "Identificador del ALUMNO a recuperar", example = "1")
-                                                       @PathVariable Long idAlumno){
-        return ResponseEntity.ok(this.alumnoService.buscarCodigo(idAlumno));
+    public ResponseEntity<AlumnoDto> obtenerPorId(@Parameter(description = "Identificador de el Alumno a recuperar", example = "1")
+                                                   @PathVariable Long idAlumno) {
+        return  ResponseEntity.ok(this.alumnoService.buscarCodigo(idAlumno));
     }
 
     @GetMapping("carnet/{carnet}")

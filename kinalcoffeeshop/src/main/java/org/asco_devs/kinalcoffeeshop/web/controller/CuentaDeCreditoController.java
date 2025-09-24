@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.cuentaDeCredito.CuentaDeCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.cuentaDeCredito.ModCuentaDeCreditoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.CuentaDeCreditoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,10 +40,11 @@ public class CuentaDeCreditoController {
                     @ApiResponse(responseCode = "500", description = "Error interno del servidor")
             }
     )
-    public ResponseEntity<CuentaDeCreditoDto> buscarPorId(@Parameter(description = "Identificador de la cuenta a recuperar")
-                                                              @PathVariable Long idCuenta) {
-        return ResponseEntity.ok(this.service.buscarPorId(idCuenta));
+    public ResponseEntity<CuentaDeCreditoDto> obtenerPorId(@Parameter(description = "Identificador de la Cuenta de Credito a recuperar", example = "1")
+                                                     @PathVariable Long idCuenta) {
+        return  ResponseEntity.ok(this.service.buscarPorId(idCuenta));
     }
+
 
     @PostMapping
     public ResponseEntity<CuentaDeCreditoDto> guardarCuentaDeCredito(@RequestBody CuentaDeCreditoDto dto) {
@@ -50,7 +52,12 @@ public class CuentaDeCreditoController {
     }
 
     @PutMapping("{idCuenta}")
-    public ResponseEntity<CuentaDeCreditoDto> modificarCuentaDeCredito(@PathVariable Long idCuenta) {
+    public ResponseEntity<CuentaDeCreditoDto> modificarCuentaDeCredito(@PathVariable Long idCuenta, @RequestBody ModCuentaDeCreditoDto mod){
+        return ResponseEntity.ok(this.service.modificarCuentaDeCredito(idCuenta, mod));
+    }
+
+    @DeleteMapping("{idCuenta}")
+    public ResponseEntity<CuentaDeCreditoDto> eliminarCuentaDeCredito(@PathVariable Long idCuenta) {
         this.service.eliminarCuentaDeCredito(idCuenta);
         return ResponseEntity.noContent().build();
     }

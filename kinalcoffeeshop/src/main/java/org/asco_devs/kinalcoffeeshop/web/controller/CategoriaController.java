@@ -41,9 +41,9 @@ public class CategoriaController {
                     @ApiResponse(responseCode = "500", description = "Error interno del servidor")
             }
     )
-    public ResponseEntity<CategoriaDto> buscarPorCodigo(@Parameter(description = "Identificador de la categoria a recuperar", example = "1")
-                                                            @PathVariable Long idCategoria) {
-        return ResponseEntity.ok(this.categoriaService.buscarPorId(idCategoria));
+    public ResponseEntity<CategoriaDto> obtenerPorId(@Parameter(description = "Identificador de la Categoria a recuperar", example = "1")
+                                                  @PathVariable Long idCategoria) {
+        return  ResponseEntity.ok(this.categoriaService.buscarPorId(idCategoria));
     }
 
     @PostMapping

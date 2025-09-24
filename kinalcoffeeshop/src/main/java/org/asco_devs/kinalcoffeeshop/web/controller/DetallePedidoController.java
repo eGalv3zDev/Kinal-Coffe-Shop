@@ -40,9 +40,9 @@ public class DetallePedidoController {
                     @ApiResponse(responseCode = "500", description = "Error interno del servidor")
             }
     )
-    public ResponseEntity<DetallePedidoDto> buscarPorId(@Parameter(description = "Identificador del detalle de pedido a recuperar", example = "1")
-                                                        @PathVariable Long idDetalle) {
-        return ResponseEntity.ok(this.service.buscarPorId(idDetalle));
+    public ResponseEntity<DetallePedidoDto> obtenerPorId(@Parameter(description = "Identificador de el Detalle de el Pedido a recuperar", example = "1")
+                                                          @PathVariable Long idDetalle) {
+        return  ResponseEntity.ok(this.service.buscarPorId(idDetalle));
     }
 
     @PostMapping
