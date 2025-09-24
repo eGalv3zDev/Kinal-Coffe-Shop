@@ -32,7 +32,7 @@ public class CuentaDeCreditoController {
 
     @GetMapping("{idCuenta}")
     @Operation(
-            summary = "Buscar una cuenta de credito por su codigo",
+            summary = "Buscar una cuenta de credito p   or su codigo",
             description = "Retorna una cuenta de credito segun su identificador unico",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Cuenta de credito encontrada"),
