@@ -21,3 +21,9 @@ public record PedidoDto(
         UsuarioConCreditoEntity creditUserId
 ) {
 }
+
+        @NotNull(message = "El studentId no puede estar vacio")
+        Long studentId,
+        @NotNull(message = "El creditUserId no puede estar vacio")
+        Long creditUserId
+) {}

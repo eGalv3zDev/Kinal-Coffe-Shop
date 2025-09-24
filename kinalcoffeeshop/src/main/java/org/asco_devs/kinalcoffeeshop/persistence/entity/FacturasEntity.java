@@ -24,5 +24,11 @@ public class FacturasEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPedido", nullable = false)
     private PedidoEntity idPedido;
-
+}
+    @PrePersist
+    protected void onCreate() {
+        if (fecha == null) {
+            fecha = LocalDateTime.now();
+        }
+    }
 }

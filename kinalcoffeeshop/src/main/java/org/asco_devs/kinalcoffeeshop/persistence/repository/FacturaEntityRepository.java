@@ -36,12 +36,12 @@ public class FacturaEntityRepository implements FacturaRepository {
 
     @Override
     public FacturaDto guardarFactura(FacturaDto dto) {
-        if(this.crudFacturaEntity.findById(dto.id()) != null){
+        if (dto.id() != null && crudFacturaEntity.existsById(dto.id())) {
             throw new FacturaAlreadyExistException(dto.id().toString());
         }
-        FacturasEntity facturaEntity = this.facturaMapper.toEntity(dto);
+        FacturasEntity facturaEntity = facturaMapper.toEntity(dto);
         facturaEntity.setFecha(LocalDateTime.now());
-        this.crudFacturaEntity.save(facturaEntity);
+        facturaEntity = crudFacturaEntity.save(facturaEntity);
         return facturaMapper.toDto(facturaEntity);
     }
 

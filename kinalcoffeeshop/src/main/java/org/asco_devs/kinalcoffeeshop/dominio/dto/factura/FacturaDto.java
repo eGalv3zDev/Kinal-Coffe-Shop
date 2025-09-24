@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 public record FacturaDto(
         Long id,
-        @NotNull(message = "La fecha no puede estar vacia")
         LocalDateTime date,
         @Min(value=0, message = "El total no puede ser negativo")
         Double total,
