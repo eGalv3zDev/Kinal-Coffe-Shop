@@ -15,6 +15,6 @@ public record PagoDto(
         @NotNull(message = "El tipo de pago no puede estar vacio")
         String type,
         @NotNull(message = "El ID del pedido no puede estar vacio")
-        PedidoEntity orderId
+        Long orderId
 ) {
 }

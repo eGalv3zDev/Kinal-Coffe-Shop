@@ -5,6 +5,6 @@ import org.asco_devs.kinalcoffeeshop.persistence.entity.PedidoEntity;
 public record ModPagoDto(
         String amount,
         String type,
-        PedidoEntity orderId
+        Long orderId
 ) {
 }
