@@ -328,21 +328,21 @@
                         <div class="form-field">
                             <p:outputLabel for="amount">Monto del Pago</p:outputLabel>
                             <p:inputText id="amount"
-                                         value="#{pagoControllerWeb.pagoSeleccionado.amount()}"
+                                         value="#{pagoControllerWeb.pagoSeleccionado.amount}"
                                          required="true"/>
                         </div>
                         <div class="form-field">
                             <p:outputLabel for="date">Fecha del Pago</p:outputLabel>
-                            <p:calendar id="date"
-                                        value="#{pagoControllerWeb.pagoSeleccionado.date}"
-                                        pattern="dd/MM/yyyy"
-                                        navigator="true"
-                                        required="true"/>
+                            <p:datePicker id="date"
+                                          value="#{pagoControllerWeb.pagoSeleccionado.date}"
+                                          pattern="dd/MM/yyyy"
+                                          showIcon="true"
+                                          required="true"/>
                         </div>
                         <div class="form-field">
                             <p:outputLabel for="type">Tipo de Pago</p:outputLabel>
                             <p:inputText id="type"
-                                         value="#{pagoControllerWeb.pagoSeleccionado.type()}"
+                                         value="#{pagoControllerWeb.pagoSeleccionado.type}"
                                          required="true"/>
                         </div>
                         <div class="form-field">
@@ -368,6 +368,7 @@
                         </div>
                     </f:facet>
                 </p:dialog>
+
 
                 <p:confirmDialog
                         widgetVar="ventanaEliminarPago"
