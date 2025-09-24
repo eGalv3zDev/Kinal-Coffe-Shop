@@ -21,8 +21,6 @@ public record AlumnoDto (
 
         @NotNull(message = "La fecha de nacimiento no puede estar vacia")
         LocalDate birthDate,
-        @NotNull(message = "La fecha de nacimiento no puede ser nula")
-        LocalDate dateBirth,
         @NotBlank(message = "La contraseña no puede estar vacia")
         String password
 ){}

@@ -54,5 +54,6 @@ public class CuentaDeCreditoController {
         this.service.eliminarCuentaDeCredito(idCuenta);
         return ResponseEntity.noContent().build();
     }
+
 }
 
