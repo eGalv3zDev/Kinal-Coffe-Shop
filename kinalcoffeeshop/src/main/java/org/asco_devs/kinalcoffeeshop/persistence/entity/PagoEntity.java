@@ -28,7 +28,7 @@ public class PagoEntity {
     @Column(name = "tipo", length = 15, nullable = false)
     private String tipo;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idPedido", insertable = false, updatable = false)
+    @JoinColumn(name = "idPedido")
     private PedidoEntity idPedido;
     @OneToMany(mappedBy = "idPago", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PagoEntity> pagos = new ArrayList<>();

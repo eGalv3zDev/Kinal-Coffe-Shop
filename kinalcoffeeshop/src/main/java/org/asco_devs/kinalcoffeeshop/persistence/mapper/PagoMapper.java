@@ -17,17 +17,17 @@ public interface PagoMapper {
     @Mapping(source = "monto", target = "amount")
     @Mapping(source = "fecha",target = "date")
     @Mapping(source = "tipo", target = "type")
-    @Mapping(source = "idPedido", target = "orderId")
+    @Mapping(source = "idPedido.idPedido", target = "orderId")
     PagoDto toDto(PagoEntity entity);
     List<PagoDto> toDto(Iterable<PagoEntity> entities);
 
     @Mapping(source = "amount", target = "monto")
     @Mapping(source = "type", target = "tipo")
-    @Mapping(source = "orderId", target = "idPedido")
+    @Mapping(target = "idPedido", ignore = true)
     PagoEntity toEntity(PagoDto dto);
 
     @Mapping(source = "amount", target = "monto")
     @Mapping(source = "type", target = "tipo")
-    @Mapping(source = "orderId", target = "idPedido")
+    @Mapping(target = "idPedido", ignore = true)
     void modificarEntityFromDto(ModPagoDto mod, @MappingTarget PagoEntity entity);
 }
