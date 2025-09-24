@@ -1,92 +1,91 @@
-package org.asco_devs.kinalcoffeeshop.controller;
+package org.asco_devs.kinalcoffeeshop.web;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
-import lombok.Data;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.AlumnoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.ModAlumnoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.service.AlumnoService;
-import org.primefaces.PrimeFaces;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
+import lombok.Setter;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.AlumnoDtoWeb;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
-@Component
+@Named
 @ViewScoped
-@Data
-@Named("alumnoControllerWeb")
+@Getter
+@Setter
 public class AlumnoControllerWeb implements Serializable {
 
-    @Autowired
-    AlumnoService alumnoService;
-
-    private List<AlumnoDto> alumnos;
-    private AlumnoDto alumnoSeleccionado;
-    private static final Logger logger = LoggerFactory.getLogger(AlumnoControllerWeb.class);
+    private List<AlumnoDtoWeb> alumnos;
+    private AlumnoDtoWeb alumnoSeleccionado;
 
     @PostConstruct
     public void init() {
-        cargarAlumnos();
+        alumnos = new ArrayList<>();
+        // Datos de ejemplo para la inicialización
+        alumnos.add(new AlumnoDtoWeb(1L, "Juan", "Pérez", "2021001", "juan.perez@example.com", "Masculino", LocalDate.of(2003, 5, 15), "password123"));
+        alumnos.add(new AlumnoDtoWeb(2L, "María", "García", "2021002", "maria.garcia@example.com", "Femenino", LocalDate.of(2002, 8, 22), "password456"));
+        alumnos.add(new AlumnoDtoWeb(3L, "Carlos", "López", "2021003", "carlos.lopez@example.com", "Masculino", LocalDate.of(2004, 1, 30), "password789"));
+        alumnos.add(new AlumnoDtoWeb(4L, "Ana", "Martínez", "2021004", "ana.martinez@example.com", "Femenino", LocalDate.of(2003, 11, 10), "password101"));
+
+        // Inicializar el objeto para un nuevo alumno
+        prepararNuevoAlumno();
     }
 
-    public void cargarAlumnos() {
-        this.alumnos = this.alumnoService.obtenerAlumnos();
-        this.alumnos.forEach(alumno -> logger.info("Alumno cargado: " + alumno.toString()));
+    /**
+     * Prepara la instancia de alumnoSeleccionado para un nuevo registro.
+     */
+    public void prepararNuevoAlumno() {
+        alumnoSeleccionado = new AlumnoDtoWeb();
     }
 
-    public void agregarAlumno() {
-        this.alumnoSeleccionado = new AlumnoDto(null, null, null, null, null, null, null, null);
-    }
-
+    /**
+     * Guarda un alumno nuevo o actualiza uno existente.
+     */
     public void guardarAlumno() {
-        logger.info("Alumno a guardar: " + this.alumnoSeleccionado);
-
-        if (this.alumnoSeleccionado.id() == null) {
-            // Guardar un nuevo alumno
-            this.alumnoService.guardarAlumno(this.alumnoSeleccionado);
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Alumno agregado exitosamente."));
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (alumnoSeleccionado.getId() == null) {
+            // Es un nuevo alumno
+            alumnoSeleccionado.setId(generarIdUnico()); // Asigna un nuevo ID
+            alumnos.add(alumnoSeleccionado);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Alumno creado correctamente."));
         } else {
-            // Modificar un alumno existente
-            ModAlumnoDto modDto = new ModAlumnoDto(
-                    this.alumnoSeleccionado.name(),
-                    this.alumnoSeleccionado.lastName(),
-                    this.alumnoSeleccionado.carnet(),
-                    this.alumnoSeleccionado.email(),
-                    this.alumnoSeleccionado.genre(),
-                    this.alumnoSeleccionado.birthDate(),
-                    this.alumnoSeleccionado.password()
-            );
-            this.alumnoService.modificarAlumno(this.alumnoSeleccionado.id(), modDto);
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Alumno actualizado exitosamente."));
+            // Es una actualización
+            int index = -1;
+            for (int i = 0; i < alumnos.size(); i++) {
+                if (Objects.equals(alumnos.get(i).getId(), alumnoSeleccionado.getId())) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1) {
+                alumnos.set(index, alumnoSeleccionado);
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Alumno actualizado correctamente."));
+            }
         }
-
-        cargarAlumnos();
-
-        PrimeFaces.current().executeScript("PF('ventanaModalAlumno').hide()");
-        PrimeFaces.current().ajax().update("formulario-alumnos:mensaje-emergente",
-                "formulario-alumnos:tabla-alumnos");
-        this.alumnoSeleccionado = null;
+        // Prepara para un posible nuevo alumno después de guardar
+        prepararNuevoAlumno();
     }
 
     public void eliminarAlumno() {
-        logger.info("Alumno a eliminar: " + this.alumnoSeleccionado);
-        this.alumnoService.eliminarAlumno(this.alumnoSeleccionado.id());
-        this.alumnoSeleccionado = null;
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Alumno eliminado exitosamente."));
+        alumnos.remove(alumnoSeleccionado);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Alumno eliminado correctamente."));
+        // Limpia la selección
+        prepararNuevoAlumno();
+    }
 
-        cargarAlumnos();
-
-        PrimeFaces.current().ajax().update("formulario-alumnos:mensaje-emergente",
-                "formulario-alumnos:tabla-alumnos");
+    /**
+     * Genera un ID único para un nuevo alumno.
+     * En una aplicación real, esto sería manejado por la base de datos.
+     * @return Un nuevo ID de tipo Long.
+     */
+    private Long generarIdUnico() {
+        return ThreadLocalRandom.current().nextLong(100, 1000);
     }
 }

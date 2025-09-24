@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
         <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/primeone-dark.css"/>
         <style type="text/css">
-            /* Los estilos CSS son los mismos que proporcionaste para la vista de pagos */
+            /* Los estilos CSS son los mismos que las vistas anteriores */
             body {
                 background: linear-gradient(135deg, #1e1e1e 0%, #121212 50%, #0a0a0a 100%);
                 color: #e0e0e0;
@@ -195,7 +195,7 @@
                 font-weight: 600;
                 font-size: 0.95rem;
             }
-            .form-field input, .form-field .ui-selectonemenu, .form-field .ui-calendar {
+            .form-field input {
                 width: 100%;
                 padding: 1rem;
                 border: 2px solid #e5e7eb;
@@ -206,7 +206,7 @@
                 transition: all 0.3s ease;
                 box-sizing: border-box;
             }
-            .form-field input:focus, .form-field .ui-selectonemenu:focus, .form-field .ui-calendar:focus {
+            .form-field input:focus {
                 border-color: #0080FF;
                 outline: none;
                 box-shadow: 0 0 0 4px rgba(0, 128, 255, 0.1);
@@ -267,54 +267,56 @@
                         <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra los alumnos del sistema</p>
                     </div>
                     <p:commandButton value="Nuevo Alumno" icon="pi pi-plus"
-                                     actionListener="#{alumnoControllerWeb.agregarAlumno}"
-                                     update="ventana-alumno"
+                                     actionListener="#{alumnoControllerWeb.prepararNuevoAlumno}"
+                                     update=":formulario-alumnos:ventana-alumno"
                                      oncomplete="PF('ventanaModalAlumno').show()"/>
                 </div>
 
-                <div class="data-grid">
-                    <ui:repeat value="#{alumnoControllerWeb.alumnos}" var="alumno">
-                        <div class="data-card">
-                            <div class="card-header">
-                                <div class="card-id">ID: #{alumno.id}</div>
-                                <div class="card-amount">Carné: #{alumno.carnet}</div>
+                <p:outputPanel id="panel-alumnos">
+                    <div class="data-grid">
+                        <ui:repeat value="#{alumnoControllerWeb.alumnos}" var="alumno">
+                            <div class="data-card">
+                                <div class="card-header">
+                                    <div class="card-id">ID: #{alumno.id}</div>
+                                    <div class="card-amount">Carné: #{alumno.carnet}</div>
+                                </div>
+                                <div class="card-field">
+                                    <span class="field-label">Nombre:</span>
+                                    <span class="field-value">#{alumno.name} #{alumno.lastName}</span>
+                                </div>
+                                <div class="card-field">
+                                    <span class="field-label">Correo:</span>
+                                    <span class="field-value">#{alumno.email}</span>
+                                </div>
+                                <div class="card-field">
+                                    <span class="field-label">Fecha de Nacimiento:</span>
+                                    <span class="field-value">
+                                        <h:outputText value="#{alumno.birthDate}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" type="localDate"/>
+                                        </h:outputText>
+                                    </span>
+                                </div>
+                                <div class="card-actions">
+                                    <p:commandButton value="Editar" icon="pi pi-pencil"
+                                                     update=":formulario-alumnos:ventana-alumno"
+                                                     oncomplete="PF('ventanaModalAlumno').show()"
+                                                     styleClass="btn-edit">
+                                        <f:setPropertyActionListener
+                                                value="#{alumno}"
+                                                target="#{alumnoControllerWeb.alumnoSeleccionado}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Eliminar" icon="pi pi-trash"
+                                                     styleClass="btn-delete"
+                                                     oncomplete="PF('ventanaEliminarAlumno').show()">
+                                        <f:setPropertyActionListener
+                                                value="#{alumno}"
+                                                target="#{alumnoControllerWeb.alumnoSeleccionado}"/>
+                                    </p:commandButton>
+                                </div>
                             </div>
-                            <div class="card-field">
-                                <span class="field-label">Nombre:</span>
-                                <span class="field-value">#{alumno.name} #{alumno.lastName}</span>
-                            </div>
-                            <div class="card-field">
-                                <span class="field-label">Correo:</span>
-                                <span class="field-value">#{alumno.email}</span>
-                            </div>
-                            <div class="card-field">
-                                <span class="field-label">Fecha de Nacimiento:</span>
-                                <span class="field-value">
-                                    <h:outputText value="#{alumno.birthDate}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </span>
-                            </div>
-                            <div class="card-actions">
-                                <p:commandButton value="Editar" icon="pi pi-pencil"
-                                                 update="ventana-alumno"
-                                                 oncomplete="PF('ventanaModalAlumno').show()"
-                                                 styleClass="btn-edit">
-                                    <f:setPropertyActionListener
-                                            value="#{alumno}"
-                                            target="#{alumnoControllerWeb.alumnoSeleccionado}"/>
-                                </p:commandButton>
-                                <p:commandButton value="Eliminar" icon="pi pi-trash"
-                                                 styleClass="btn-delete"
-                                                 oncomplete="PF('ventanaEliminarAlumno').show()">
-                                    <f:setPropertyActionListener
-                                            value="#{alumno}"
-                                            target="#{alumnoControllerWeb.alumnoSeleccionado}"/>
-                                </p:commandButton>
-                            </div>
-                        </div>
-                    </ui:repeat>
-                </div>
+                        </ui:repeat>
+                    </div>
+                </p:outputPanel>
 
                 <p:dialog header="Detalle Alumno" showEffect="fade" modal="true"
                           widgetVar="ventanaModalAlumno" responsive="true" width="500">
@@ -355,7 +357,9 @@
                                         value="#{alumnoControllerWeb.alumnoSeleccionado.birthDate}"
                                         pattern="dd/MM/yyyy"
                                         navigator="true"
-                                        required="true"/>
+                                        required="true">
+                                <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+                            </p:calendar>
                         </div>
                         <div class="form-field">
                             <p:outputLabel for="password">Contraseña</p:outputLabel>
@@ -369,10 +373,9 @@
                     <f:facet name="footer">
                         <div style="display: flex; gap: 1rem; padding: 1rem;">
                             <p:commandButton value="Guardar" icon="pi pi-check"
-                                             process="ventana-alumno @this"
                                              actionListener="#{alumnoControllerWeb.guardarAlumno}"
-                                             update=":formulario-alumnos:mensaje-emergente formulario-alumnos"
-                                             oncomplete="PF('ventanaModalAlumno').hide()"
+                                             update=":formulario-alumnos:panel-alumnos :formulario-alumnos:mensaje-emergente"
+                                             oncomplete="if (!args.validationFailed) PF('ventanaModalAlumno').hide()"
                                              style="flex: 1;"/>
                             <p:commandButton value="Cancelar" icon="pi pi-times"
                                              onclick="PF('ventanaModalAlumno').hide()"
@@ -388,9 +391,8 @@
                         header="Confirmar" severity="warn">
                     <div style="display: flex; gap: 1rem; justify-content: center; padding-top: 1rem;">
                         <p:commandButton value="Sí" icon="pi pi-check"
-                                         process="@this"
                                          actionListener="#{alumnoControllerWeb.eliminarAlumno}"
-                                         update=":formulario-alumnos:mensaje-emergente formulario-alumnos"
+                                         update=":formulario-alumnos:panel-alumnos :formulario-alumnos:mensaje-emergente"
                                          oncomplete="PF('ventanaEliminarAlumno').hide()"
                                          styleClass="btn-delete"/>
                         <p:commandButton value="No" icon="pi pi-times"
