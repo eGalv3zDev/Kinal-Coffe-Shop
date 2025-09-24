@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.persistence.mapper;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.DetalleFacturaDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModDetalleFacturaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detalleFactura.DetalleFacturaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detalleFactura.ModDetalleFacturaDto;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.DetalleFacturaEntity;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;

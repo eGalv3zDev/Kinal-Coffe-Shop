@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.service;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.AlumnoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModAlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.AlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.ModAlumnoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.repository.AlumnoRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,8 @@ public class AlumnoService {
     public List<AlumnoDto> obtenerAlumnos() {
         return this.alumnoRepository.obtenerAlumnos();
     }
+
+    public AlumnoDto buscarCarnet(String carnet) {return this.alumnoRepository.buscarPorCarnet(carnet);}
 
     public AlumnoDto buscarCodigo(Long codigo){
         return this.alumnoRepository.buscarPorId(codigo);

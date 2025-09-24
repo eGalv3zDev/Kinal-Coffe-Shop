@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CrudPedidoEntity extends CrudRepository<PedidoEntity, Long> {
 
-    List<PedidoEntity> findByIdAlumno(Long idAlumno);
-    List<PedidoEntity> findByIdUsuarioCredito(Long idUsuarioCredito);
-    List<PedidoEntity> findByAlumnoNombre(String nombre);
+//    List<PedidoEntity> findByIdAlumno(Long idAlumno);
+//    List<PedidoEntity> findByIdUsuarioCredito(Long idUsuarioCredito);
+    List<PedidoEntity> findByIdAlumno_Nombre(String nombre);
 }

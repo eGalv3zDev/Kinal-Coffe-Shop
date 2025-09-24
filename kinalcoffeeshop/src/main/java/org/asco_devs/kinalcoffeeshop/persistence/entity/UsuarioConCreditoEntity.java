@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="UsuariosConCredito")
+@Table(name="usuarios_con_credito")
 @Data
 public class UsuarioConCreditoEntity {
     @Id
@@ -25,5 +25,5 @@ public class UsuarioConCreditoEntity {
     @Column(name = "fechaNacimiento")
     private LocalDate fechaNacimiento;
     @Column(length = 128, nullable = false)
-    private String contraseña;
+    private String contrasena;
 }

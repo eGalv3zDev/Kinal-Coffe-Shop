@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.repository;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.DetalleFacturaDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModDetalleFacturaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detalleFactura.DetalleFacturaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detalleFactura.ModDetalleFacturaDto;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ create table Alumnos(
     correo varchar(128),
     genero enum('masculino','femenino','no') not null,
     fechaNacimiento date,
-    contraseña varchar(128) not null,
+    contrasena varchar(128) not null,
     constraint pk_alumno primary key (idAlumno)
 );
 
@@ -22,7 +22,7 @@ create table UsuariosConCredito(
     correo varchar(128) unique,
     genero enum('masculino','femenino','no') not null,
     fechaNacimiento date,
-    contraseña varchar(128) not null,
+    contrasena varchar(128) not null,
     constraint pk_usuario_credito primary key (idUsuarioCredito)
 );
 

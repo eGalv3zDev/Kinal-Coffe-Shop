@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.CuentaDeCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.cuentaDeCredito.CuentaDeCreditoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.CuentaDeCreditoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

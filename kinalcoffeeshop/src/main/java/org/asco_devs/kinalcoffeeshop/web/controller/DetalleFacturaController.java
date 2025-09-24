@@ -6,8 +6,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.DetalleFacturaDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModDetalleFacturaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detalleFactura.DetalleFacturaDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detalleFactura.ModDetalleFacturaDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.DetalleFacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,4 +62,6 @@ public class DetalleFacturaController {
         this.detalleFacturaService.eliminarDetalleFactura(idDetalleFactura);
         return ResponseEntity.noContent().build();
     }
+
 }
+

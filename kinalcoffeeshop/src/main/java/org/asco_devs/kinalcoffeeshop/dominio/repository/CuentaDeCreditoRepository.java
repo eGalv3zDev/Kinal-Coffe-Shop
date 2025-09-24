@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.repository;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.CuentaDeCreditoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModCuentaDeCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.cuentaDeCredito.CuentaDeCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.cuentaDeCredito.ModCuentaDeCreditoDto;
 
 import java.util.List;
 

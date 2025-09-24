@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.dominio.repository;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.PagoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModPagoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.pago.PagoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.pago.ModPagoDto;
 
 import java.util.List;
 

@@ -35,11 +35,11 @@ values
     ('Alejandro', 'Morales', '2021242', 'amorales-2021242@kinal.edu.gt', 'masculino', '2002-02-17', 'pass123'),
     ('Sergio', 'López', '2023188', 'slopez-2023188@kinal.edu.gt', 'masculino', '2003-09-08', 'pass123');
 
-INSERT IGNORE INTO usuarios_con_credito (nombre, apellido, telefono, correo, genero, fecha_nacimiento, contraseña)
+INSERT IGNORE INTO usuarios_con_credito (nombre, apellido, telefono, correo, genero, fecha_nacimiento, contrasena)
 VALUES
     ('Carlos', 'Gómez', '50212345678', 'carlos.gomez@correo.com', 'masculino', '1995-03-14', 'clave123'),
     ('María', 'López', '50287654321', 'maria.lopez@correo.com', 'femenino', '1998-07-22', 'pass456'),
-    ('Juan', 'Martínez', '50255566677', 'juan.martinez@correo.com', 'masculino', '1990-01-10', 'contraseña789'),
+    ('Juan', 'Martínez', '50255566677', 'juan.martinez@correo.com', 'masculino', '1990-01-10', 'contrasena789'),
     ('Ana', 'Hernández', '50211122233', 'ana.hernandez@correo.com', 'femenino', '2000-12-01', 'segura321'),
     ('Pedro', 'Ramírez', '50233344455', 'pedro.ramirez@correo.com', 'masculino', '1987-05-09', 'pass000'),
     ('Sofía', 'Díaz', '50277788899', 'sofia.diaz@correo.com', 'femenino', '1999-08-25', 'mypassword'),

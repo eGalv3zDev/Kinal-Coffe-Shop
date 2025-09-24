@@ -5,8 +5,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.AlumnoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModAlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.AlumnoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.alumno.ModAlumnoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +44,21 @@ public class AlumnoController {
     public ResponseEntity<AlumnoDto> buscarPorId(@Parameter(description = "Identificador del ALUMNO a recuperar", example = "1")
                                                        @PathVariable Long idAlumno){
         return ResponseEntity.ok(this.alumnoService.buscarCodigo(idAlumno));
+    }
+
+    @GetMapping("carnet/{carnet}")
+    @Operation(
+            summary = "Buscar un alumno por su codigo de carnet",
+            description = "Retorna un alumno segun su identificador de carnet proporcionado por el colegio",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Alumno encontrado"),
+                    @ApiResponse(responseCode = "404", description = "Alumno no encontrado"),
+                    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+    )
+    public ResponseEntity<AlumnoDto> buscarPorCarnet(@Parameter(description = "Carnet del ALUMNO a recuperar", example = "2023220" )
+                                                                @PathVariable String carnet){
+        return ResponseEntity.ok(this.alumnoService.buscarCarnet(carnet));
     }
 
     @PostMapping

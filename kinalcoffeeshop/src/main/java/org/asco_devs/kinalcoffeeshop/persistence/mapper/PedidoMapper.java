@@ -1,7 +1,10 @@
 package org.asco_devs.kinalcoffeeshop.persistence.mapper;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.*;
-import org.asco_devs.kinalcoffeeshop.persistence.entity.DetallePedidosEntity;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detallePedido.DetallePedidoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.pedido.ModPedidoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.pedido.PedidoConDetalleDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.pedido.PedidoDto;
+import org.asco_devs.kinalcoffeeshop.persistence.entity.DetallePedidoEntity;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.PedidoEntity;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
@@ -23,7 +26,7 @@ public interface PedidoMapper {
     List<PedidoDto> toDto(Iterable<PedidoEntity> entities);
 
     @InheritConfiguration
-    @Mapping(target = "fecha", ignore = true) // se pone automáticamente en EntityRepository
+    @Mapping(target = "fecha", ignore = true)
     @Mapping(source = "state", target = "estado", qualifiedByName = "generarEstado")
     PedidoEntity toEntity(PedidoDto dto);
 
@@ -33,16 +36,17 @@ public interface PedidoMapper {
     @Mapping(source = "creditUserId", target = "idUsuarioCredito")
     void modificarEntityFromDto(ModPedidoDto mod, @MappingTarget PedidoEntity entity);
 
-    @Mapping(source = "alumno.nombre", target = "alumnoNombre")
-    @Mapping(source = "detalles", target = "detalles")
-    PedidoConDetallesDto toConDetallesDto(PedidoEntity pedido);
+    @Mapping(source = "idAlumno.nombre", target = "alumnName")
+    @Mapping(source = "detalles", target = "details")
+    PedidoConDetalleDto toConDetallesDto(PedidoEntity pedido);
 
-    List<PedidoConDetallesDto> toConDetallesDto(List<PedidoEntity> pedidos);
+    List<PedidoConDetalleDto> toConDetallesDto(List<PedidoEntity> pedidos);
 
-    @Mapping(source = "producto.nombre", target = "productoNombre")
-    @Mapping(source = "pedido.idPedido", target = "idPedido")
-    @Mapping(source = "producto.idProducto", target = "idProducto")
-    DetallePedidosDto toDetalleDto(DetallePedidosEntity detalle);
+    @Mapping(source = "idProducto.nombre", target = "productName")
+    @Mapping(source = "idPedido.idPedido", target = "id")
+    @Mapping(source = "idProducto.idProducto", target = "productId")
+    DetallePedidoDto toDetalleDto(DetallePedidoEntity detalle);
 
     List<DetallePedidosDto> toDetalleDto(List<DetallePedidosEntity> detalles);
 }
+

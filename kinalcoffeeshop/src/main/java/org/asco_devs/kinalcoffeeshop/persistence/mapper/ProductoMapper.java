@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.persistence.mapper;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModProductoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ProductoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.producto.ModProductoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.producto.ProductoDto;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.ProductoEntity;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
@@ -13,15 +13,16 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ProductoMapper {
 
-    @Mapping(source="idProducto", target = "id")
-    @Mapping(source="nombre", target = "name")
-    @Mapping(source="descripcion", target = "description")
-    @Mapping(source="precio", target = "price")
-    @Mapping(source="cantidad", target = "stock")
-    @Mapping(source="fechaDeIngreso", target = "entryDate")
-    @Mapping(source="fechaDeExpiracion", target = "expirationDate")
-    @Mapping(source="idCategoria", target = "categoryId")
+    @Mapping(source = "idProducto", target = "id")
+    @Mapping(source = "nombre", target = "name")
+    @Mapping(source = "descripcion", target = "description")
+    @Mapping(source = "precio", target = "price")
+    @Mapping(source = "cantidad", target = "stock")
+    @Mapping(source = "fechaDeIngreso", target = "entryDate")
+    @Mapping(source = "fechaDeExpiracion", target = "expirationDate")
+    @Mapping(source = "idCategoria", target = "categoryId")
     ProductoDto toDto(ProductoEntity entity);
+
     List<ProductoDto> toDto(Iterable<ProductoEntity> entities);
 
     @InheritConfiguration

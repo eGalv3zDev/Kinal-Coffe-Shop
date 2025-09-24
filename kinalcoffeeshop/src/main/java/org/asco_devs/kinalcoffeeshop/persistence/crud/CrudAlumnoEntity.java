@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CrudAlumnoEntity extends CrudRepository<AlumnoEntity, Long> {
     AlumnoEntity findFirstByNombre(String nombre);
+    AlumnoEntity findFirstByCarnet(String carnet);
 }

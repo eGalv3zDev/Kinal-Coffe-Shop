@@ -5,8 +5,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModProductoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ProductoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.producto.ModProductoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.producto.ProductoDto;
 import org.asco_devs.kinalcoffeeshop.dominio.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/productos")
-@Tag(name="ProductoController", description = "API de gestion de productos")
+@Tag(name = "ProductoController", description = "API de gestion de productos")
 public class ProductoController {
     @Autowired
     private ProductoService productoService;
@@ -27,7 +27,7 @@ public class ProductoController {
     }
 
     @GetMapping
-    public ResponseEntity<List> obtenerProductos(){
+    public ResponseEntity<List> obtenerProductos() {
         return ResponseEntity.ok(this.productoService.obtenerProductos());
     }
 
@@ -42,22 +42,22 @@ public class ProductoController {
             }
     )
     public ResponseEntity<ProductoDto> buscarPorCodigo(@Parameter(description = "Identificador del producto a recuperar", example = "1")
-                                                           @PathVariable Long idProducto){
+                                                       @PathVariable Long idProducto) {
         return ResponseEntity.ok(this.productoService.buscarPorId(idProducto));
     }
 
     @PostMapping
-    public ResponseEntity<ProductoDto> guardarProducto(@RequestBody @Valid ProductoDto dto){
+    public ResponseEntity<ProductoDto> guardarProducto(@RequestBody @Valid ProductoDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.productoService.guardarProducto(dto));
     }
 
     @PutMapping("{idProducto}")
-    public ResponseEntity<ProductoDto> modificarProducto(@PathVariable Long idProducto, @RequestBody ModProductoDto mod){
+    public ResponseEntity<ProductoDto> modificarProducto(@PathVariable Long idProducto, @RequestBody ModProductoDto mod) {
         return ResponseEntity.ok(this.productoService.modificarProducto(idProducto, mod));
     }
 
     @DeleteMapping("{idProducto}")
-    public ResponseEntity<Void> eliminarProducto(@PathVariable Long idProducto){
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Long idProducto) {
         this.productoService.eliminarProducto(idProducto);
         return ResponseEntity.noContent().build();
     }

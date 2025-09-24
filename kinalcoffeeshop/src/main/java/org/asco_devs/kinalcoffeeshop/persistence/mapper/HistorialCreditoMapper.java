@@ -1,7 +1,7 @@
 package org.asco_devs.kinalcoffeeshop.persistence.mapper;
 
-import org.asco_devs.kinalcoffeeshop.dominio.dto.HistorialCreditoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.ModHistorialCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.historialCredito.HistorialCreditoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.historialCredito.ModHistorialCreditoDto;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.HistorialCreditoEntity;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
