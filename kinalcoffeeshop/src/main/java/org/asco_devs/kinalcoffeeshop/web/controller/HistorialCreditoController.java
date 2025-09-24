@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/historiales-credito")
 @Tag(name = "HistorialCreditoController", description = "API de gestion de historiales de credito")
@@ -20,6 +22,11 @@ public class HistorialCreditoController {
 
     public HistorialCreditoController(HistorialCreditoService service) {
         this.service = service;
+    }
+
+    @GetMapping
+    public ResponseEntity<List> obtenerHistorialesCredito() {
+        return ResponseEntity.ok(this.service.obtenerHistoriales());
     }
 
     @GetMapping("{idHistorial}")

@@ -8,6 +8,6 @@ public record ModPagoDto(
         String amount,
         LocalDate date,
         String type,
-        PedidoEntity orderId
+        Long orderId
 ) {
 }

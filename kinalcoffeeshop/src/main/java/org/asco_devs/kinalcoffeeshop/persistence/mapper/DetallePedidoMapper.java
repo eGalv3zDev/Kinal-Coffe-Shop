@@ -14,6 +14,7 @@ import java.util.List;
 public interface DetallePedidoMapper {
 
     @Mapping(source = "idDetalle", target = "id")
+    @Mapping(source = "idProducto.nombre", target = "productName")
     @Mapping(source = "cantidad", target = "stock")
     @Mapping(source = "subtotal", target = "subTotal")
     @Mapping(source = "idPedido.idPedido", target = "orderId")
@@ -23,10 +24,11 @@ public interface DetallePedidoMapper {
 
     @InheritInverseConfiguration
     @Mapping(source = "id", target = "idDetalle")
+    @Mapping(target = "idProducto.nombre", ignore = true)
     @Mapping(source = "stock", target = "cantidad")
     @Mapping(source = "subTotal", target = "subtotal")
-    @Mapping(source = "orderId", target = "idPedido", ignore = true)
-    @Mapping(source = "productId", target = "idProducto", ignore = true)
+    @Mapping(target = "idPedido", ignore = true)
+    @Mapping(target = "idProducto", ignore = true)
     DetallePedidoEntity toEntity(DetallePedidoDto dto);
 
     @Mapping(source = "stock", target = "cantidad")
