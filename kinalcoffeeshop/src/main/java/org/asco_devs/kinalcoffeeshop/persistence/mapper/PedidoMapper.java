@@ -6,11 +6,11 @@ import org.asco_devs.kinalcoffeeshop.dominio.dto.pedido.PedidoConDetalleDto;
 import org.asco_devs.kinalcoffeeshop.dominio.dto.pedido.PedidoDto;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.DetallePedidoEntity;
 import org.asco_devs.kinalcoffeeshop.persistence.entity.PedidoEntity;
+import org.asco_devs.kinalcoffeeshop.persistence.mapper.util.StateMapper;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
 
 import java.util.List;
 
@@ -20,13 +20,13 @@ public interface PedidoMapper {
     @Mapping(source = "idPedido", target = "id")
     @Mapping(source = "fecha", target = "date")
     @Mapping(source = "estado", target = "state", qualifiedByName = "generarState")
-    @Mapping(source = "idAlumno", target = "studentId")
-    @Mapping(source = "idUsuarioCredito", target = "creditUserId")
+    @Mapping(source = "idAlumno.idAlumno", target = "studentId")
+    @Mapping(source = "idUsuarioCredito.idUsuarioCredito", target = "creditUserId")
     PedidoDto toDto(PedidoEntity entity);
     List<PedidoDto> toDto(Iterable<PedidoEntity> entities);
 
     @InheritConfiguration
-    @Mapping(target = "fecha", ignore = true)
+    @Mapping(source = "date", target = "fecha", ignore = true)
     @Mapping(source = "state", target = "estado", qualifiedByName = "generarEstado")
     PedidoEntity toEntity(PedidoDto dto);
 
@@ -47,6 +47,6 @@ public interface PedidoMapper {
     @Mapping(source = "idProducto.idProducto", target = "productId")
     DetallePedidoDto toDetalleDto(DetallePedidoEntity detalle);
 
-    List<DetallePedidosDto> toDetalleDto(List<DetallePedidosEntity> detalles);
+    List<DetallePedidoDto> toDetalleDto(List<DetallePedidoEntity> detalles);
 }
 

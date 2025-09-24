@@ -26,10 +26,10 @@ public class PedidoEntity {
     @Column(name = "estado", length = 15, nullable = false)
     private String estado;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idAlumno", insertable = false, updatable = false)
+    @JoinColumn(name = "idAlumno")
     private AlumnoEntity idAlumno;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUsuarioCredito", insertable = false, updatable = false)
+    @JoinColumn(name = "idUsuarioCredito")
     private UsuarioConCreditoEntity idUsuarioCredito;
     @OneToMany(mappedBy = "idPedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<DetallePedidoEntity> detalles = new ArrayList<>();

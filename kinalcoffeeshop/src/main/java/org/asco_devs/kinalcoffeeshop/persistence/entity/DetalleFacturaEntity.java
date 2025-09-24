@@ -21,17 +21,11 @@ public class DetalleFacturaEntity {
     @Column(name = "subtotal", nullable = false)
     private Double subtotal;
 
-    @Column(name = "idFactura", nullable = false)
-    private Long idFactura;
-
-    @Column(name = "idProducto", nullable = false)
-    private Long idProducto;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idFactura")
+    private FacturasEntity idFactura;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idFactura", insertable = false, updatable = false)
-    private FacturasEntity factura;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idProducto", insertable = false, updatable = false)
-    private ProductoEntity producto;
+    @JoinColumn(name = "idProducto")
+    private ProductoEntity idProducto;
 }

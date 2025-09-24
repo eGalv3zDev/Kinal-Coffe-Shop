@@ -1,6 +1,6 @@
-package org.asco_devs.kinalcoffeeshop.persistence.mapper;
+package org.asco_devs.kinalcoffeeshop.persistence.mapper.util;
 
-import org.asco_devs.kinalcoffeeshop.dominio.State;
+import org.asco_devs.kinalcoffeeshop.dominio.model.State;
 import org.mapstruct.Named;
 
 public class StateMapper {

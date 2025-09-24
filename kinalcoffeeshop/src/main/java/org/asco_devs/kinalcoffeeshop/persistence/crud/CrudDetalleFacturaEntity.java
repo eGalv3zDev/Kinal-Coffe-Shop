@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CrudDetalleFacturaEntity extends CrudRepository<DetalleFacturaEntity, Long> {
     DetalleFacturaEntity findFirstByIdDetalleFactura(Long idDetalleFactura);
-    List<DetalleFacturaEntity> findByIdFactura(Long idFactura);
-    List<DetalleFacturaEntity> findByIdProducto(Long idProducto);
+    List<DetalleFacturaEntity> findByIdFactura_IdFactura(Long idFactura);
+    List<DetalleFacturaEntity> findByIdProducto_IdProducto(Long idProducto);
 }

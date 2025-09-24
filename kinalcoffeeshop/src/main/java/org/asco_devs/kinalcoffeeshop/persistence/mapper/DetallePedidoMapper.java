@@ -16,8 +16,8 @@ public interface DetallePedidoMapper {
     @Mapping(source = "idDetalle", target = "id")
     @Mapping(source = "cantidad", target = "stock")
     @Mapping(source = "subtotal", target = "subTotal")
-    @Mapping(source = "idPedido", target = "orderId")
-    @Mapping(source = "idProducto", target = "productId")
+    @Mapping(source = "idPedido.idPedido", target = "orderId")
+    @Mapping(source = "idProducto.idProducto", target = "productId")
     DetallePedidoDto toDto(DetallePedidoEntity entity);
     List<DetallePedidoDto> toDto(Iterable<DetallePedidoEntity> entities);
 
@@ -25,8 +25,8 @@ public interface DetallePedidoMapper {
     @Mapping(source = "id", target = "idDetalle")
     @Mapping(source = "stock", target = "cantidad")
     @Mapping(source = "subTotal", target = "subtotal")
-    @Mapping(source = "orderId", target = "idPedido")
-    @Mapping(source = "productId", target = "idProducto")
+    @Mapping(source = "orderId", target = "idPedido", ignore = true)
+    @Mapping(source = "productId", target = "idProducto", ignore = true)
     DetallePedidoEntity toEntity(DetallePedidoDto dto);
 
     @Mapping(source = "stock", target = "cantidad")
