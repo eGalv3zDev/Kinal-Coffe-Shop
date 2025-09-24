@@ -268,7 +268,7 @@
                     </div>
                     <p:commandButton value="Nuevo Detalle de Pedido" icon="pi pi-plus"
                                      actionListener="#{detallePedidoControllerWeb.agregarDetallePedido}"
-                                     update="ventana-detalle-pedido"
+                                     update=":formulario-detalles-pedido:ventana-detalle-pedido"
                                      oncomplete="PF('ventanaModalDetallePedido').show()"/>
                 </div>
 
@@ -293,7 +293,7 @@
                             </div>
                             <div class="card-actions">
                                 <p:commandButton value="Editar" icon="pi pi-pencil"
-                                                 update="ventana-detalle-pedido"
+                                                 update=":formulario-detalles-pedido:ventana-detalle-pedido"
                                                  oncomplete="PF('ventanaModalDetallePedido').show()"
                                                  styleClass="btn-edit">
                                     <f:setPropertyActionListener

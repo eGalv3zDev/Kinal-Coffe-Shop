@@ -1,100 +1,113 @@
 package org.asco_devs.kinalcoffeeshop.controller;
 
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detallePedido.DetallePedidoDto;
+import org.asco_devs.kinalcoffeeshop.dominio.dto.detallePedido.DetallePedidoDtoWeb;
+import org.asco_devs.kinalcoffeeshop.dominio.service.DetallePedidoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import lombok.Data;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.detallePedido.DetallePedidoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.dto.detallePedido.ModDetallePedidoDto;
-import org.asco_devs.kinalcoffeeshop.dominio.service.DetallePedidoService;
-import org.primefaces.PrimeFaces;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Named("detallePedidoControllerWeb")
 @Component
-@ViewScoped
-@Data
+@SessionScope
 public class DetallePedidoControllerWeb implements Serializable {
 
-    @Inject
+    @Autowired
     private DetallePedidoService detallePedidoService;
 
-    private List<DetallePedidoDto> detallesPedidos;
-    private DetallePedidoDto detallePedidoSeleccionado;
-    private static final Logger logger = LoggerFactory.getLogger(DetallePedidoControllerWeb.class);
+    private List<DetallePedidoDtoWeb> detallesPedidos;
+    private DetallePedidoDtoWeb detallePedidoSeleccionado;
 
     @PostConstruct
     public void init() {
         cargarDetallesPedidos();
     }
 
-    /**
-     * Carga todos los detalles de pedidos desde el servicio.
-     */
     public void cargarDetallesPedidos() {
-        this.detallesPedidos = detallePedidoService.obtenerDetallePedidos();
+        this.detallesPedidos = detallePedidoService.obtenerDetallePedidos().stream()
+                .map(this::toDetallePedidoDtoWeb)
+                .collect(Collectors.toList());
     }
 
-    /**
-     * Prepara un nuevo DTO de detalle de pedido para la creación.
-     */
     public void agregarDetallePedido() {
-        this.detallePedidoSeleccionado = new DetallePedidoDto(null, null, null, null, null, null);
+        // Siempre crea una nueva instancia para evitar NPE
+        this.detallePedidoSeleccionado = new DetallePedidoDtoWeb();
     }
 
-    /**
-     * Guarda o actualiza un detalle de pedido.
-     */
     public void guardarDetallePedido() {
-        logger.info("Detalle de pedido a guardar: " + this.detallePedidoSeleccionado);
         try {
-            if (this.detallePedidoSeleccionado.id() == null) {
-                this.detallePedidoService.guardarDetalle(this.detallePedidoSeleccionado);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Detalle de pedido guardado correctamente."));
+            if (detallePedidoSeleccionado != null) {
+                DetallePedidoDto detalleDto = toDetallePedidoDto(detallePedidoSeleccionado);
+                detallePedidoService.guardarDetalle(detalleDto);
+                cargarDetallesPedidos();
+                agregarMensaje(FacesMessage.SEVERITY_INFO, "Éxito", "Detalle de pedido guardado correctamente.");
             } else {
-                ModDetallePedidoDto modDto = new ModDetallePedidoDto(
-                        this.detallePedidoSeleccionado.stock(),
-                        this.detallePedidoSeleccionado.subTotal()
-                );
-                this.detallePedidoService.modificarDetalle(this.detallePedidoSeleccionado.id(), modDto);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Detalle de pedido actualizado correctamente."));
+                agregarMensaje(FacesMessage.SEVERITY_ERROR, "Error", "El objeto a guardar es nulo.");
             }
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+            agregarMensaje(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el detalle de pedido: " + e.getMessage());
         }
-        cargarDetallesPedidos();
-        PrimeFaces.current().executeScript("PF('ventanaModalDetallePedido').hide()");
-        PrimeFaces.current().ajax().update("formulario-detalles-pedido");
-        this.detallePedidoSeleccionado = null;
     }
 
-    /**
-     * Elimina un detalle de pedido seleccionado.
-     */
     public void eliminarDetallePedido() {
-        logger.info("Detalle de pedido a eliminar: " + this.detallePedidoSeleccionado);
-        if (this.detallePedidoSeleccionado != null && this.detallePedidoSeleccionado.id() != null) {
-            try {
-                detallePedidoService.eliminarDetalle(this.detallePedidoSeleccionado.id());
-                this.detallePedidoSeleccionado = null;
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Detalle de pedido eliminado."));
-            } catch (Exception e) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        try {
+            if (detallePedidoSeleccionado != null) {
+                detallePedidoService.eliminarDetalle(detallePedidoSeleccionado.getId());
+                cargarDetallesPedidos();
+                agregarMensaje(FacesMessage.SEVERITY_INFO, "Éxito", "Detalle de pedido eliminado correctamente.");
             }
-            cargarDetallesPedidos();
-            PrimeFaces.current().ajax().update("formulario-detalles-pedido");
+        } catch (Exception e) {
+            agregarMensaje(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar el detalle de pedido: " + e.getMessage());
         }
+    }
+
+    private DetallePedidoDtoWeb toDetallePedidoDtoWeb(DetallePedidoDto dto) {
+        return new DetallePedidoDtoWeb(
+                dto.id(),
+                dto.productName(),
+                dto.stock(),
+                dto.subTotal(),
+                dto.orderId(),
+                dto.productId()
+        );
+    }
+
+    private DetallePedidoDto toDetallePedidoDto(DetallePedidoDtoWeb dtoWeb) {
+        return new DetallePedidoDto(
+                dtoWeb.getId(),
+                dtoWeb.getProductName(),
+                dtoWeb.getStock(),
+                dtoWeb.getSubTotal(),
+                dtoWeb.getOrderId(),
+                dtoWeb.getProductId()
+        );
+    }
+
+    private void agregarMensaje(FacesMessage.Severity severidad, String resumen, String detalle) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severidad, resumen, detalle));
+    }
+
+    // --- Getters y Setters ---
+
+    public List<DetallePedidoDtoWeb> getDetallesPedidos() {
+        return detallesPedidos;
+    }
+
+    public DetallePedidoDtoWeb getDetallePedidoSeleccionado() {
+        // Add a null check here to prevent the initial error
+        if (detallePedidoSeleccionado == null) {
+            detallePedidoSeleccionado = new DetallePedidoDtoWeb();
+        }
+        return detallePedidoSeleccionado;
+    }
+
+    public void setDetallePedidoSeleccionado(DetallePedidoDtoWeb detallePedidoSeleccionado) {
+        this.detallePedidoSeleccionado = detallePedidoSeleccionado;
     }
 }
