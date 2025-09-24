@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
         <link rel="stylesheet" href="https://unpkg.com/primeflex/themes/primeone-dark.css"/>
         <style type="text/css">
-            /* Los estilos CSS son los mismos que las vistas anteriores */
             body {
                 background: linear-gradient(135deg, #1e1e1e 0%, #121212 50%, #0a0a0a 100%);
                 color: #e0e0e0;
@@ -18,244 +17,44 @@
                 margin: 0;
                 padding: 20px;
             }
-            .main-container {
-                max-width: 1400px;
-                margin: 0 auto;
-            }
-            .page-header {
-                background: linear-gradient(135deg, #00366D, #004D99);
-                border-radius: 15px;
-                padding: 2rem;
-                margin-bottom: 2rem;
-                text-align: center;
-                box-shadow: 0 8px 32px rgba(0, 54, 109, 0.3);
-            }
-            .page-header h1 {
-                color: white;
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin: 0;
-                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            }
-            .action-toolbar {
-                background: rgba(18, 18, 18, 0.8);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(0, 54, 109, 0.3);
-                border-radius: 12px;
-                padding: 1.5rem;
-                margin-bottom: 2rem;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .data-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-                gap: 1.5rem;
-                margin-bottom: 2rem;
-            }
-            .data-card {
-                background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-                border: 1px solid rgba(0, 77, 153, 0.3);
-                border-radius: 15px;
-                padding: 1.5rem;
-                transition: all 0.3s ease;
-                position: relative;
-                overflow: hidden;
-            }
-            .data-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 4px;
-                background: linear-gradient(90deg, #00366D, #0080FF, #004D99);
-            }
-            .data-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 35px rgba(0, 128, 255, 0.2);
-                border-color: #0080FF;
-            }
-            .card-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 1rem;
-                padding-bottom: 1rem;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-            }
-            .card-id {
-                background: linear-gradient(45deg, #00366D, #004D99);
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 8px;
-                font-weight: 600;
-                font-size: 0.9rem;
-            }
-            .card-amount {
-                font-size: 1.8rem;
-                font-weight: 700;
-                color: #FFC000;
-                text-shadow: 0 0 10px rgba(255, 192, 0, 0.3);
-            }
-            .card-field {
-                display: flex;
-                justify-content: space-between;
-                margin: 0.8rem 0;
-                padding: 0.5rem 0;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-            }
-            .field-label {
-                color: #9ca3af;
-                font-size: 0.9rem;
-                font-weight: 500;
-            }
-            .field-value {
-                color: #e0e0e0;
-                font-weight: 600;
-            }
-            .card-actions {
-                display: flex;
-                gap: 0.8rem;
-                margin-top: 1.5rem;
-                padding-top: 1rem;
-                border-top: 1px solid rgba(255,255,255,0.1);
-            }
-            .ui-button {
-                background: linear-gradient(135deg, #FFC000, #FFD040) !important;
-                border: none !important;
-                border-radius: 10px !important;
-                color: #000000 !important;
-                font-weight: 600 !important;
-                padding: 0.8rem 1.5rem !important;
-                transition: all 0.3s ease !important;
-                box-shadow: 0 4px 15px rgba(255, 192, 0, 0.3) !important;
-            }
-            .ui-button:hover {
-                background: linear-gradient(135deg, #FFD040, #FFC000) !important;
-                transform: translateY(-2px) !important;
-                box-shadow: 0 8px 25px rgba(255, 192, 0, 0.4) !important;
-            }
-            .btn-edit {
-                background: linear-gradient(135deg, #0080FF, #0066CC) !important;
-                color: #ffffff !important;
-                box-shadow: 0 4px 15px rgba(0, 128, 255, 0.3) !important;
-                flex: 1;
-            }
-            .btn-edit:hover {
-                background: linear-gradient(135deg, #0066CC, #004D99) !important;
-                box-shadow: 0 8px 25px rgba(0, 128, 255, 0.4) !important;
-            }
-            .btn-delete {
-                background: linear-gradient(135deg, #FF0000, #CC0000) !important;
-                color: #ffffff !important;
-                box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3) !important;
-                flex: 1;
-            }
-            .btn-delete:hover {
-                background: linear-gradient(135deg, #CC0000, #990000) !important;
-                box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4) !important;
-            }
-            .btn-secondary {
-                background: linear-gradient(135deg, #4b5563, #6b7280) !important;
-                color: #ffffff !important;
-                box-shadow: 0 4px 15px rgba(75, 85, 99, 0.3) !important;
-            }
-            .ui-dialog {
-                background: linear-gradient(145deg, #f8f9fa, #ffffff) !important;
-                border-radius: 20px !important;
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;
-                border: none !important;
-            }
-            .ui-dialog .ui-dialog-titlebar {
-                background: linear-gradient(135deg, #00366D, #004D99) !important;
-                color: #ffffff !important;
-                border: none !important;
-                border-radius: 20px 20px 0 0 !important;
-                padding: 1.5rem 2rem !important;
-            }
-            .ui-dialog .ui-dialog-title {
-                color: #ffffff !important;
-                font-size: 1.4rem !important;
-                font-weight: 600 !important;
-            }
-            .form-grid {
-                display: grid;
-                gap: 1.5rem;
-                padding: 2rem;
-            }
-            .form-field {
-                position: relative;
-            }
-            .form-field label {
-                display: block;
-                margin-bottom: 0.8rem;
-                color: #374151;
-                font-weight: 600;
-                font-size: 0.95rem;
-            }
-            .form-field input {
-                width: 100%;
-                padding: 1rem;
-                border: 2px solid #e5e7eb;
-                background: #ffffff;
-                color: #111827;
-                border-radius: 12px;
-                font-size: 1rem;
-                transition: all 0.3s ease;
-                box-sizing: border-box;
-            }
-            .form-field input:focus {
-                border-color: #0080FF;
-                outline: none;
-                box-shadow: 0 0 0 4px rgba(0, 128, 255, 0.1);
-                transform: translateY(-1px);
-            }
-            .ui-confirm-dialog {
-                background: linear-gradient(145deg, #f8f9fa, #ffffff) !important;
-                border-radius: 20px !important;
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;
-                border: 2px solid rgba(255, 0, 0, 0.2) !important;
-            }
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            .data-card {
-                animation: fadeInUp 0.6s ease-out;
-            }
-            .data-card:nth-child(even) {
-                animation-delay: 0.1s;
-            }
-            .data-card:nth-child(3n) {
-                animation-delay: 0.2s;
-            }
-            @media (max-width: 768px) {
-                .data-grid {
-                    grid-template-columns: 1fr;
-                }
-                .page-header h1 {
-                    font-size: 2rem;
-                }
-                .action-toolbar {
-                    flex-direction: column;
-                    gap: 1rem;
-                    text-align: center;
-                }
-            }
+            .main-container { max-width: 1400px; margin: 0 auto; }
+            .page-header { background: linear-gradient(135deg, #00366D, #004D99); border-radius: 15px; padding: 2rem; margin-bottom: 2rem; text-align: center; box-shadow: 0 8px 32px rgba(0, 54, 109, 0.3); }
+            .page-header h1 { color: white; font-size: 2.5rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+            .action-toolbar { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(0, 54, 109, 0.3); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
+            .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+            .data-card { background: linear-gradient(145deg, #1a1a1a, #2a2a2a); border: 1px solid rgba(0, 77, 153, 0.3); border-radius: 15px; padding: 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
+            .data-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #00366D, #0080FF, #004D99); }
+            .data-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 128, 255, 0.2); border-color: #0080FF; }
+            .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .card-id { background: linear-gradient(45deg, #00366D, #004D99); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
+            .card-field { display: flex; justify-content: space-between; align-items: center; margin: 0.8rem 0; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .field-label { color: #9ca3af; font-size: 0.9rem; font-weight: 500; }
+            .field-value { color: #e0e0e0; font-weight: 600; font-size: 1.1rem; }
+            .card-actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
+            .ui-button { background: linear-gradient(135deg, #FFC000, #FFD040) !important; border: none !important; border-radius: 10px !important; color: #000000 !important; font-weight: 600 !important; padding: 0.8rem 1.5rem !important; transition: all 0.3s ease !important; box-shadow: 0 4px 15px rgba(255, 192, 0, 0.3) !important; }
+            .ui-button:hover { background: linear-gradient(135deg, #FFD040, #FFC000) !important; transform: translateY(-2px) !important; box-shadow: 0 8px 25px rgba(255, 192, 0, 0.4) !important; }
+            .btn-edit { background: linear-gradient(135deg, #0080FF, #0066CC) !important; color: #ffffff !important; box-shadow: 0 4px 15px rgba(0, 128, 255, 0.3) !important; flex: 1; }
+            .btn-edit:hover { background: linear-gradient(135deg, #0066CC, #004D99) !important; box-shadow: 0 8px 25px rgba(0, 128, 255, 0.4) !important; }
+            .btn-delete { background: linear-gradient(135deg, #FF0000, #CC0000) !important; color: #ffffff !important; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3) !important; flex: 1; }
+            .btn-delete:hover { background: linear-gradient(135deg, #CC0000, #990000) !important; box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4) !important; }
+            .btn-secondary { background: linear-gradient(135deg, #4b5563, #6b7280) !important; color: #ffffff !important; box-shadow: 0 4px 15px rgba(75, 85, 99, 0.3) !important; }
+            .ui-dialog { background: linear-gradient(145deg, #f8f9fa, #ffffff) !important; border-radius: 20px !important; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important; border: none !important; }
+            .ui-dialog .ui-dialog-titlebar { background: linear-gradient(135deg, #00366D, #004D99) !important; color: #ffffff !important; border: none !important; border-radius: 20px 20px 0 0 !important; padding: 1.5rem 2rem !important; }
+            .ui-dialog .ui-dialog-title { color: #ffffff !important; font-size: 1.4rem !important; font-weight: 600 !important; }
+            .form-grid { display: grid; gap: 1.5rem; padding: 2rem; }
+            .form-field { position: relative; }
+            .form-field label { display: block; margin-bottom: 0.8rem; color: #374151; font-weight: 600; font-size: 0.95rem; }
+            .form-field input { width: 100%; padding: 1rem; border: 2px solid #e5e7eb; background: #ffffff; color: #111827; border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box; }
+            .form-field input:focus { border-color: #0080FF; outline: none; box-shadow: 0 0 0 4px rgba(0, 128, 255, 0.1); transform: translateY(-1px); }
+            .ui-confirm-dialog { background: linear-gradient(145deg, #f8f9fa, #ffffff) !important; border-radius: 20px !important; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important; border: 2px solid rgba(255, 0, 0, 0.2) !important; }
+            @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+            .data-card { animation: fadeInUp 0.6s ease-out; }
         </style>
     </h:head>
     <h:body>
         <div class="main-container">
             <h:form id="formulario-categorias">
-                <p:growl id="mensaje-emergente" showDetails="true"/>
+                <p:growl id="mensaje-emergente" showDetail="true"/>
 
                 <div class="page-header">
                     <h1>Gestión de Categorías</h1>
@@ -264,68 +63,68 @@
                 <div class="action-toolbar">
                     <div>
                         <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
-                        <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra las categorías de productos del sistema</p>
+                        <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra las categorías de productos</p>
                     </div>
                     <p:commandButton value="Nueva Categoría" icon="pi pi-plus"
                                      actionListener="#{categoriaControllerWeb.agregarCategoria}"
-                                     update="ventana-categoria"
+                                     update=":formulario-categorias:ventana-categoria"
                                      oncomplete="PF('ventanaModalCategoria').show()"/>
                 </div>
 
-                <div class="data-grid">
-                    <ui:repeat value="#{categoriaControllerWeb.categorias}" var="categoria">
-                        <div class="data-card">
-                            <div class="card-header">
-                                <div class="card-id">ID: #{categoria.id}</div>
-                                <div class="card-amount"></div>
+                <p:outputPanel id="panel-categorias">
+                    <div class="data-grid">
+                        <ui:repeat value="#{categoriaControllerWeb.categorias}" var="categoria">
+                            <div class="data-card">
+                                <div class="card-header">
+                                    <div class="card-id">ID: #{categoria.id}</div>
+                                </div>
+                                <div class="card-field">
+                                    <span class="field-label">Nombre:</span>
+                                    <span class="field-value">#{categoria.name}</span>
+                                </div>
+                                <div class="card-actions">
+                                    <p:commandButton value="Editar" icon="pi pi-pencil"
+                                                     update=":formulario-categorias:ventana-categoria"
+                                                     oncomplete="PF('ventanaModalCategoria').show()"
+                                                     styleClass="btn-edit">
+                                        <f:setPropertyActionListener
+                                                value="#{categoria}"
+                                                target="#{categoriaControllerWeb.categoriaSeleccionada}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Eliminar" icon="pi pi-trash"
+                                                     styleClass="btn-delete"
+                                                     oncomplete="PF('ventanaEliminarCategoria').show()">
+                                        <f:setPropertyActionListener
+                                                value="#{categoria}"
+                                                target="#{categoriaControllerWeb.categoriaSeleccionada}"/>
+                                    </p:commandButton>
+                                </div>
                             </div>
-                            <div class="card-field">
-                                <span class="field-label">Nombre:</span>
-                                <span class="field-value">#{categoria.name}</span>
-                            </div>
-                            <div class="card-actions">
-                                <p:commandButton value="Editar" icon="pi pi-pencil"
-                                                 update="ventana-categoria"
-                                                 oncomplete="PF('ventanaModalCategoria').show()"
-                                                 styleClass="btn-edit">
-                                    <f:setPropertyActionListener
-                                            value="#{categoria}"
-                                            target="#{categoriaControllerWeb.categoriaSeleccionada}"/>
-                                </p:commandButton>
-                                <p:commandButton value="Eliminar" icon="pi pi-trash"
-                                                 styleClass="btn-delete"
-                                                 oncomplete="PF('ventanaEliminarCategoria').show()">
-                                    <f:setPropertyActionListener
-                                            value="#{categoria}"
-                                            target="#{categoriaControllerWeb.categoriaSeleccionada}"/>
-                                </p:commandButton>
-                            </div>
-                        </div>
-                    </ui:repeat>
-                </div>
+                        </ui:repeat>
+                    </div>
+                </p:outputPanel>
 
                 <p:dialog header="Detalle Categoría" showEffect="fade" modal="true"
-                          widgetVar="ventanaModalCategoria" responsive="true" width="500">
+                          widgetVar="ventanaModalCategoria" responsive="true" width="450">
                     <p:outputPanel id="ventana-categoria" class="form-grid">
                         <div class="form-field">
-                            <p:outputLabel for="name">Nombre</p:outputLabel>
+                            <p:outputLabel for="name" value="Nombre de la Categoría"/>
                             <p:inputText id="name"
                                          value="#{categoriaControllerWeb.categoriaSeleccionada.name}"
-                                         required="true"/>
+                                         required="true"
+                                         requiredMessage="El nombre de la categoría es obligatorio."/>
                         </div>
                     </p:outputPanel>
                     <f:facet name="footer">
                         <div style="display: flex; gap: 1rem; padding: 1rem;">
                             <p:commandButton value="Guardar" icon="pi pi-check"
-                                             process="ventana-categoria @this"
                                              actionListener="#{categoriaControllerWeb.guardarCategoria}"
-                                             update=":formulario-categorias:mensaje-emergente formulario-categorias"
-                                             oncomplete="PF('ventanaModalCategoria').hide()"
+                                             update=":formulario-categorias:panel-categorias :formulario-categorias:mensaje-emergente"
+                                             oncomplete="if (!args.validationFailed) PF('ventanaModalCategoria').hide()"
                                              style="flex: 1;"/>
                             <p:commandButton value="Cancelar" icon="pi pi-times"
                                              onclick="PF('ventanaModalCategoria').hide()"
-                                             styleClass="btn-secondary"
-                                             type="button"
+                                             styleClass="btn-secondary" type="button"
                                              style="flex: 1;"/>
                         </div>
                     </f:facet>
@@ -335,19 +134,16 @@
                         widgetVar="ventanaEliminarCategoria"
                         showEffect="fade" width="400"
                         message="¿Está seguro de que desea eliminar esta categoría?"
-                        header="Confirmar Eliminación"
-                        severity="warn">
+                        header="Confirmar Eliminación" severity="warn">
                     <div style="display: flex; gap: 1rem; justify-content: center; padding-top: 1rem;">
-                        <p:commandButton value="Eliminar" icon="pi pi-check"
-                                         process="@this"
+                        <p:commandButton value="Sí, eliminar" icon="pi pi-check"
                                          actionListener="#{categoriaControllerWeb.eliminarCategoria}"
-                                         update=":formulario-categorias:mensaje-emergente formulario-categorias"
+                                         update=":formulario-categorias:panel-categorias :formulario-categorias:mensaje-emergente"
                                          oncomplete="PF('ventanaEliminarCategoria').hide()"
                                          styleClass="btn-delete"/>
-                        <p:commandButton value="Cancelar" icon="pi pi-times"
+                        <p:commandButton value="No, cancelar" icon="pi pi-times"
                                          onclick="PF('ventanaEliminarCategoria').hide()"
-                                         styleClass="btn-secondary"
-                                         type="button"/>
+                                         styleClass="btn-secondary" type="button"/>
                     </div>
                 </p:confirmDialog>
             </h:form>
