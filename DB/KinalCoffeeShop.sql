@@ -52,13 +52,13 @@ create table Pedidos(
     total decimal(10,2) not null,
     estado enum('Pendiente','Preparando','Entregado','Cancelado') default 'Pendiente',
     idUsuariosCredito int,
+    idAlumno int,
+    idUsuarioCredito int,
     constraint fk_pedido_usuariosConCredito foreign key (idUsuariosCredito)
         references UsuariosConCredito(idUsuariosCredito),
     constraint fk_pedido_alumno foreign key (idAlumno)
         references Alumnos(idAlumno),
-    constraint pk_pedido primary key (idPedido)
-    idAlumno int,
-    idUsuarioCredito int,
+    constraint pk_pedido primary key (idPedido),
     constraint pk_pedido primary key (idPedido),
     constraint fk_pedido_alumno foreign key (idAlumno)
         references Alumnos(idAlumno),
