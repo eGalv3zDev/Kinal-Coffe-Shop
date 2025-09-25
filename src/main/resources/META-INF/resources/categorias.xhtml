@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Categorías</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-categorias">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header">
+                <h1>Gestión de Categorías</h1>
+            </div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra las categorías de productos</p>
+                </div>
+                <p:commandButton value="Nueva Categoría" icon="pi pi-plus"
+                                 actionListener="#{categoriaControllerWeb.prepararNuevaCategoria}"
+                                 update=":formulario-categorias:ventana-categoria"
+                                 oncomplete="PF('ventanaModalCategoria').show()"/>
+            </div>
+
+            <p:outputPanel id="panel-categorias">
+                <div class="data-grid">
+                    <ui:repeat value="#{categoriaControllerWeb.categorias}" var="categoria">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID: #{categoria.id()}</div>
+                            </div>
+                            <div class="card-field">
+                                <span class="field-label">Nombre:</span>
+                                <span class="field-value">#{categoria.name()}</span>
+                            </div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil"
+                                                 actionListener="#{categoriaControllerWeb.prepararEdicion(categoria)}"
+                                                 update=":formulario-categorias:ventana-categoria"
+                                                 oncomplete="PF('ventanaModalCategoria').show()"
+                                                 styleClass="btn-edit"/>
+
+                                <p:commandButton value="Eliminar" icon="pi pi-trash"
+                                                 styleClass="btn-delete"
+                                                 actionListener="#{categoriaControllerWeb.prepararParaEliminar(categoria)}"
+                                                 oncomplete="PF('ventanaEliminarCategoria').show()"
+                                                 update=":formulario-categorias:dialogo-eliminar-contenido"
+                                                 process="@this">
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle Categoría" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalCategoria" responsive="true" width="450">
+                <p:outputPanel id="ventana-categoria" class="form-grid">
+                    <div class="form-field">
+                        <p:outputLabel for="nombre" value="Nombre de la Categoría"/>
+                        <p:inputText id="nombre"
+                                     value="#{categoriaControllerWeb.categoriaSeleccionada.nombre}"
+                                     required="true"
+                                     requiredMessage="El nombre de la categoría es obligatorio."/>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <div style="display: flex; gap: 1rem; padding: 1rem; justify-content: flex-end;">
+                        <p:commandButton value="Cancelar" icon="pi pi-times"
+                                         onclick="PF('ventanaModalCategoria').hide()"
+                                         styleClass="btn-secondary" type="button"/>
+                        <p:commandButton value="Guardar" icon="pi pi-check"
+                                         actionListener="#{categoriaControllerWeb.guardarCategoria}"
+                                         update=":formulario-categorias:panel-categorias :formulario-categorias:mensaje-emergente"
+                                         oncomplete="if (!args.validationFailed) PF('ventanaModalCategoria').hide()"/>
+                    </div>
+                </f:facet>
+            </p:dialog>
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarCategoria"
+                      modal="true" showEffect="fade" width="400" responsive="true">
+
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>
+                ¿Está seguro de que desea eliminar la categoría <h:outputText
+                                value="'#{categoriaControllerWeb.categoriaParaEliminar.name()}'"
+                                style="font-weight: bold;"/>?
+            </span>
+                    </div>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                        <p:commandButton value="No, cancelar" icon="pi pi-times"
+                                         styleClass="ui-button-secondary"
+                                         onclick="PF('ventanaEliminarCategoria').hide()"
+                                         type="button"/>
+
+                        <p:commandButton value="Sí, eliminar" icon="pi pi-check"
+                                         styleClass="ui-button-danger"
+                                         actionListener="#{categoriaControllerWeb.eliminarCategoria}"
+                                         process="@this"
+                                         update=":formulario-categorias:panel-categorias :formulario-categorias:mensaje-emergente"
+                                         oncomplete="PF('ventanaEliminarCategoria').hide()"/>
+                    </div>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

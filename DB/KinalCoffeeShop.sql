@@ -32,14 +32,6 @@ create table CategoriaProductos(
     constraint pk_categoria primary key (idCategoria)
 );
 
-create table Alumnos(
-    idAlumno int auto_increment,
-    nombre varchar(64) not null,
-    apellido varchar(64) not null,
-    carnet varchar(8) unique not null,      
-    constraint pk_alumno primary key (idAlumno)
-);
-
 create table Productos(
     idProducto int auto_increment,
     nombre varchar(64) not null,
