@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Detalles de Pedidos</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-detalles">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header"><h1>Gestión de Detalles de Pedidos</h1></div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra los detalles de los pedidos</p>
+                </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
+                <p:commandButton value="Nuevo Detalle" icon="pi pi-plus"
+                                 actionListener="#{detallePedidosControllerWeb.prepararNuevoDetalle}"
+                                 update=":formulario-detalles:ventana-detalle"
+                                 oncomplete="PF('ventanaModalDetalle').show()"/>
+            </div>
+            </div>
+
+            <p:outputPanel id="panel-detalles">
+                <div class="data-grid">
+                    <ui:repeat value="#{detallePedidosControllerWeb.detalles}" var="detalle">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID Detalle: #{detalle.idDetalle}</div>
+                            </div>
+                            <div class="card-field"><span class="field-label">ID Pedido:</span><span class="field-value">#{detalle.pedido.idPedido}</span></div>
+                            <div class="card-field"><span class="field-label">Producto:</span><span class="field-value">#{detalle.producto.nombre}</span></div>
+                            <div class="card-field"><span class="field-label">Cantidad:</span><span class="field-value">#{detalle.cantidad}</span></div>
+                            <div class="card-field"><span class="field-label">Subtotal:</span><span class="field-value"><h:outputText value="#{detalle.subtotal}"><f:convertNumber type="currency" currencySymbol="Q"/></h:outputText></span></div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil" process="@this" update=":formulario-detalles:ventana-detalle" oncomplete="PF('ventanaModalDetalle').show()" styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{detalle}" target="#{detallePedidosControllerWeb.detalleSeleccionado}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash" process="@this" styleClass="btn-delete" update=":formulario-detalles:dialogo-eliminar-contenido" oncomplete="PF('ventanaEliminarDetalle').show()">
+                                    <f:setPropertyActionListener value="#{detalle}" target="#{detallePedidosControllerWeb.detalleSeleccionado}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle de Pedido" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalDetalle" responsive="true" width="700">
+                <p:outputPanel id="ventana-detalle" class="form-grid-col-2">
+                    <div class="form-field">
+                        <p:outputLabel for="pedido" value="Pedido"/>
+                        <p:selectOneMenu id="pedido" value="#{detallePedidosControllerWeb.detalleSeleccionado.pedido}" required="true">
+                            <f:selectItem itemLabel="Seleccione un pedido" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{detallePedidosControllerWeb.listaPedidos}" var="ped" itemLabel="Pedido ##{ped.idPedido}" itemValue="#{ped}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field">
+                        <p:outputLabel for="producto" value="Producto"/>
+                        <p:selectOneMenu id="producto" value="#{detallePedidosControllerWeb.detalleSeleccionado.producto}" required="true">
+                            <f:selectItem itemLabel="Seleccione un producto" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{detallePedidosControllerWeb.listaProductos}" var="prod" itemLabel="#{prod.nombre}" itemValue="#{prod}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field"><p:outputLabel for="cantidad" value="Cantidad"/><p:inputNumber id="cantidad" value="#{detallePedidosControllerWeb.detalleSeleccionado.cantidad}" required="true" decimalPlaces="0"/></div>
+                    <div class="form-field"><p:outputLabel for="subtotal" value="Subtotal"/><p:inputNumber id="subtotal" value="#{detallePedidosControllerWeb.detalleSeleccionado.subtotal}" required="true" symbol="Q "/></div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalDetalle').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{detallePedidosControllerWeb.guardarDetalle}"
+                                     update=":formulario-detalles:panel-detalles :formulario-detalles:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalDetalle').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarDetalle" modal="true" showEffect="fade" width="400" responsive="true">
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>¿Está seguro de eliminar el detalle con ID <h:outputText value="'#{detallePedidosControllerWeb.detalleSeleccionado.idDetalle}'" style="font-weight: bold;"/>?</span>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary" onclick="PF('ventanaEliminarDetalle').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                     actionListener="#{detallePedidosControllerWeb.eliminarDetalle}"
+                                     oncomplete="PF('ventanaEliminarDetalle').hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

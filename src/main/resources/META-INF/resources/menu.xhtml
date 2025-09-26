@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>☕ KinalCoffeeShop - Panel de Gestión</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="menu-styles.css"/>
+</h:head>
+
+<h:body>
+    <div class="admin-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="#{request.contextPath}/menu.xhtml" class="admin-logo">☕ KinalCoffeeShop</a>
+                <div class="admin-subtitle">Panel de Gestión</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Productos</div>
+                    <a href="#{request.contextPath}/categoriaProductos.xhtml" class="nav-item">
+                        <span class="nav-icon">📂</span>
+                        <span>Categorías</span>
+                    </a>
+                    <a href="#{request.contextPath}/productos.xhtml" class="nav-item">
+                        <span class="nav-icon">🛍️</span>
+                        <span>Productos</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Clientes y Pedidos</div>
+                    <a href="#{request.contextPath}/alumnos.xhtml" class="nav-item">
+                        <span class="nav-icon">👨‍🎓</span>
+                        <span>Alumnos</span>
+                    </a>
+                    <a href="#{request.contextPath}/usuariosConCredito.xhtml" class="nav-item">
+                        <span class="nav-icon">💳</span>
+                        <span>Usuarios con Crédito</span>
+                    </a>
+                    <a href="#{request.contextPath}/pedidos.xhtml" class="nav-item">
+                        <span class="nav-icon">📦</span>
+                        <span>Pedidos</span>
+                    </a>
+                    <a href="#{request.contextPath}/detallePedidos.xhtml" class="nav-item">
+                        <span class="nav-icon">📝</span>
+                        <span>Detalles de Pedidos</span>
+                    </a>
+                    <a href="#{request.contextPath}/pagos.xhtml" class="nav-item">
+                        <span class="nav-icon">💰</span>
+                        <span>Pagos</span>
+                    </a>
+                    <a href="#{request.contextPath}/facturas.xhtml" class="nav-item">
+                        <span class="nav-icon">🧾</span>
+                        <span>Facturas</span>
+                    </a>
+                    <a href="#{request.contextPath}/detalleFacturas.xhtml" class="nav-item">
+                        <span class="nav-icon">📄</span>
+                        <span>Detalles de Facturas</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Crédito</div>
+                    <a href="#{request.contextPath}/cuentasDeCredito.xhtml" class="nav-item">
+                        <span class="nav-icon">🏦</span>
+                        <span>Cuentas de Crédito</span>
+                    </a>
+                    <a href="#{request.contextPath}/lineasDeCredito.xhtml" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        <span>Líneas de Crédito</span>
+                    </a>
+                    <a href="#{request.contextPath}/historialCreditos.xhtml" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Historial de Créditos</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="topbar">
+                <h1 class="topbar-title">Panel de Gestión de Entidades</h1>
+            </div>
+
+            <div class="content-area">
+                <div class="welcome-message">
+                    <h2>Bienvenido al Panel de Administración</h2>
+                    <p>Selecciona una entidad del menú lateral para comenzar a gestionar los datos del café.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</h:body>
+</html>

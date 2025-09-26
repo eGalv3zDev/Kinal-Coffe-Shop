@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface CrudAlumnosEntity extends CrudRepository<Alumnos, Long> {
     Optional<Alumnos> findByCarnet(String carnet);
+    Optional<Alumnos> findByCorreo(String correo);
 }

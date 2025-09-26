@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Historial de Créditos</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-historial">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header"><h1>Gestión de Historial de Créditos</h1></div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra el historial de movimientos de crédito</p>
+                </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
+                <p:commandButton value="Nuevo Registro" icon="pi pi-plus"
+                                 actionListener="#{historialCreditosControllerWeb.prepararNuevoRegistro}"
+                                 update=":formulario-historial:ventana-historial"
+                                 oncomplete="PF('ventanaModalHistorial').show()"/>
+            </div>
+            </div>
+
+            <p:outputPanel id="panel-historial">
+                <div class="data-grid">
+                    <ui:repeat value="#{historialCreditosControllerWeb.historiales}" var="historial">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID Historial: #{historial.idHistorial}</div>
+                            </div>
+                            <div class="card-field"><span class="field-label">Cuenta:</span><span class="field-value">#{historial.cuenta.usuarioConCredito.nombre}</span></div>
+                            <div class="card-field"><span class="field-label">Movimiento:</span><span class="field-value">#{historial.tipoMovimiento}</span></div>
+                            <div class="card-field"><span class="field-label">Monto:</span><span class="field-value"><h:outputText value="#{historial.monto}"><f:convertNumber type="currency" currencySymbol="Q"/></h:outputText></span></div>
+                            <div class="card-field"><span class="field-label">Fecha:</span><span class="field-value"><h:outputText value="#{historial.fecha}"><f:convertDateTime pattern="dd/MM/yyyy HH:mm"/></h:outputText></span></div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil" process="@this" update=":formulario-historial:ventana-historial" oncomplete="PF('ventanaModalHistorial').show()" styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{historial}" target="#{historialCreditosControllerWeb.historialSeleccionado}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash" process="@this" styleClass="btn-delete" update=":formulario-historial:dialogo-eliminar-contenido" oncomplete="PF('ventanaEliminarHistorial').show()">
+                                    <f:setPropertyActionListener value="#{historial}" target="#{historialCreditosControllerWeb.historialSeleccionado}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle de Historial" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalHistorial" responsive="true" width="700">
+                <p:outputPanel id="ventana-historial" class="form-grid-col-2">
+                    <div class="form-field full-width">
+                        <p:outputLabel for="cuenta" value="Cuenta de Crédito"/>
+                        <p:selectOneMenu id="cuenta" value="#{historialCreditosControllerWeb.historialSeleccionado.cuenta}" required="true">
+                            <f:selectItem itemLabel="Seleccione una cuenta" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{historialCreditosControllerWeb.listaCuentas}" var="cta" itemLabel="Cuenta de #{cta.usuarioConCredito.nombre} #{cta.usuarioConCredito.apellido}" itemValue="#{cta}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field"><p:outputLabel for="tipoMovimiento" value="Tipo de Movimiento"/><p:selectOneMenu id="tipoMovimiento" value="#{historialCreditosControllerWeb.historialSeleccionado.tipoMovimiento}" required="true"><f:selectItems value="#{historialCreditosControllerWeb.tiposMovimiento}"/></p:selectOneMenu></div>
+                    <div class="form-field"><p:outputLabel for="monto" value="Monto"/><p:inputNumber id="monto" value="#{historialCreditosControllerWeb.historialSeleccionado.monto}" required="true" symbol="Q "/></div>
+                    <div class="form-field">
+                        <p:outputLabel for="consumo" value="Consumo Asociado (Opcional)"/>
+                        <p:selectOneMenu id="consumo" value="#{historialCreditosControllerWeb.historialSeleccionado.consumo}">
+                            <f:selectItem itemLabel="Ninguno" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{historialCreditosControllerWeb.listaConsumos}" var="cons" itemLabel="Consumo ##{cons.idConsumo}" itemValue="#{cons}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field">
+                        <p:outputLabel for="pago" value="Pago Asociado (Opcional)"/>
+                        <p:selectOneMenu id="pago" value="#{historialCreditosControllerWeb.historialSeleccionado.pago}">
+                            <f:selectItem itemLabel="Ninguno" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{historialCreditosControllerWeb.listaPagos}" var="pg" itemLabel="Pago ##{pg.idPago}" itemValue="#{pg}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter"/>
+                        </p:selectOneMenu>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalHistorial').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{historialCreditosControllerWeb.guardarRegistro}"
+                                     update=":formulario-historial:panel-historial :formulario-historial:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalHistorial').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarHistorial" modal="true" showEffect="fade" width="400" responsive="true">
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>¿Está seguro de eliminar el registro de historial con ID <h:outputText value="'#{historialCreditosControllerWeb.historialSeleccionado.idHistorial}'" style="font-weight: bold;"/>?</span>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary" onclick="PF('ventanaEliminarHistorial').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                     actionListener="#{historialCreditosControllerWeb.eliminarRegistro}"
+                                     oncomplete="PF('ventanaEliminarHistorial').hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

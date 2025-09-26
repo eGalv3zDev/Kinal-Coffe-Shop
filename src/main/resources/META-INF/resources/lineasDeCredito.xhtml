@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Líneas de Crédito</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-lineas">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header"><h1>Gestión de Líneas de Crédito</h1></div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra los consumos de las cuentas de crédito</p>
+                </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
+                <p:commandButton value="Nuevo Consumo" icon="pi pi-plus"
+                                 actionListener="#{lineasDeCreditoControllerWeb.prepararNuevaLinea}"
+                                 update=":formulario-lineas:ventana-linea"
+                                 oncomplete="PF('ventanaModalLinea').show()"/>
+            </div>
+            </div>
+
+            <p:outputPanel id="panel-lineas">
+                <div class="data-grid">
+                    <ui:repeat value="#{lineasDeCreditoControllerWeb.lineas}" var="linea">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID Consumo: #{linea.idConsumo}</div>
+                            </div>
+                            <div class="card-field"><span class="field-label">Cuenta:</span><span class="field-value">#{linea.cuenta.usuarioConCredito.nombre} #{linea.cuenta.usuarioConCredito.apellido}</span></div>
+                            <div class="card-field"><span class="field-label">Producto:</span><span class="field-value">#{linea.producto.nombre}</span></div>
+                            <div class="card-field"><span class="field-label">Cantidad:</span><span class="field-value">#{linea.cantidad}</span></div>
+                            <div class="card-field"><span class="field-label">Subtotal:</span><span class="field-value"><h:outputText value="#{linea.subtotal}"><f:convertNumber type="currency" currencySymbol="Q"/></h:outputText></span></div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil" process="@this" update=":formulario-lineas:ventana-linea" oncomplete="PF('ventanaModalLinea').show()" styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{linea}" target="#{lineasDeCreditoControllerWeb.lineaSeleccionada}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash" process="@this" styleClass="btn-delete" update=":formulario-lineas:dialogo-eliminar-contenido" oncomplete="PF('ventanaEliminarLinea').show()">
+                                    <f:setPropertyActionListener value="#{linea}" target="#{lineasDeCreditoControllerWeb.lineaSeleccionada}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle de Consumo" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalLinea" responsive="true" width="700">
+                <p:outputPanel id="ventana-linea" class="form-grid-col-2">
+                    <div class="form-field">
+                        <p:outputLabel for="cuenta" value="Cuenta de Crédito"/>
+                        <p:selectOneMenu id="cuenta" value="#{lineasDeCreditoControllerWeb.lineaSeleccionada.cuenta}" required="true">
+                            <f:selectItem itemLabel="Seleccione una cuenta" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{lineasDeCreditoControllerWeb.listaCuentas}" var="cta" itemLabel="Cuenta de #{cta.usuarioConCredito.nombre}" itemValue="#{cta}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field">
+                        <p:outputLabel for="producto" value="Producto"/>
+                        <p:selectOneMenu id="producto" value="#{lineasDeCreditoControllerWeb.lineaSeleccionada.producto}" required="true">
+                            <f:selectItem itemLabel="Seleccione un producto" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{lineasDeCreditoControllerWeb.listaProductos}" var="prod" itemLabel="#{prod.nombre}" itemValue="#{prod}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field"><p:outputLabel for="cantidad" value="Cantidad"/><p:inputNumber id="cantidad" value="#{lineasDeCreditoControllerWeb.lineaSeleccionada.cantidad}" required="true" decimalPlaces="0"/></div>
+                    <div class="form-field"><p:outputLabel for="subtotal" value="Subtotal"/><p:inputNumber id="subtotal" value="#{lineasDeCreditoControllerWeb.lineaSeleccionada.subtotal}" required="true" symbol="Q "/></div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalLinea').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{lineasDeCreditoControllerWeb.guardarLinea}"
+                                     update=":formulario-lineas:panel-lineas :formulario-lineas:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalLinea').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarLinea" modal="true" showEffect="fade" width="400" responsive="true">
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>¿Está seguro de eliminar el consumo con ID <h:outputText value="'#{lineasDeCreditoControllerWeb.lineaSeleccionada.idConsumo}'" style="font-weight: bold;"/>?</span>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary" onclick="PF('ventanaEliminarLinea').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                     actionListener="#{lineasDeCreditoControllerWeb.eliminarLinea}"
+                                     oncomplete="PF('ventanaEliminarLinea').hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

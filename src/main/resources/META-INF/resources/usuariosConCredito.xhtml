@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Usuarios con Crédito</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-usuarios">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header">
+                <h1>Gestión de Usuarios con Crédito</h1>
+            </div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra los usuarios con crédito del sistema</p>
+                </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
+                <p:commandButton value="Nuevo Usuario" icon="pi pi-plus"
+                                 actionListener="#{usuariosConCreditoControllerWeb.prepararNuevoUsuario}"
+                                 update=":formulario-usuarios:ventana-usuario"
+                                 oncomplete="PF('ventanaModalUsuario').show()"/>
+            </div>
+            </div>
+
+            <p:outputPanel id="panel-usuarios">
+                <div class="data-grid">
+                    <ui:repeat value="#{usuariosConCreditoControllerWeb.usuarios}" var="usuario">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID: #{usuario.idUsuarioCredito}</div>
+                            </div>
+                            <div class="card-field">
+                                <span class="field-label">Nombre:</span>
+                                <span class="field-value">#{usuario.nombre} #{usuario.apellido}</span>
+                            </div>
+                            <div class="card-field">
+                                <span class="field-label">Correo:</span>
+                                <span class="field-value">#{usuario.correo}</span>
+                            </div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil"
+                                                 process="@this"
+                                                 update=":formulario-usuarios:ventana-usuario"
+                                                 oncomplete="PF('ventanaModalUsuario').show()"
+                                                 styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{usuario}" target="#{usuariosConCreditoControllerWeb.usuarioSeleccionado}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash"
+                                                 process="@this"
+                                                 styleClass="btn-delete"
+                                                 update=":formulario-usuarios:dialogo-eliminar-contenido"
+                                                 oncomplete="PF('ventanaEliminarUsuario').show()">
+                                    <f:setPropertyActionListener value="#{usuario}" target="#{usuariosConCreditoControllerWeb.usuarioSeleccionado}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle Usuario con Crédito" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalUsuario" responsive="true" width="600">
+                <p:outputPanel id="ventana-usuario" class="form-grid">
+                    <div class="form-field"><p:outputLabel for="nombre" value="Nombre"/><p:inputText id="nombre" value="#{usuariosConCreditoControllerWeb.usuarioSeleccionado.nombre}" required="true"/></div>
+                    <div class="form-field"><p:outputLabel for="apellido" value="Apellido"/><p:inputText id="apellido" value="#{usuariosConCreditoControllerWeb.usuarioSeleccionado.apellido}" required="true"/></div>
+                    <div class="form-field"><p:outputLabel for="telefono" value="Teléfono"/><p:inputText id="telefono" value="#{usuariosConCreditoControllerWeb.usuarioSeleccionado.telefono}"/></div>
+                    <div class="form-field"><p:outputLabel for="correo" value="Correo Electrónico"/><p:inputText id="correo" value="#{usuariosConCreditoControllerWeb.usuarioSeleccionado.correo}"/></div>
+                    <div class="form-field"><p:outputLabel for="genero" value="Género"/><p:selectOneMenu id="genero" value="#{usuariosConCreditoControllerWeb.usuarioSeleccionado.genero}" required="true"><f:selectItems value="#{usuariosConCreditoControllerWeb.generos}"/></p:selectOneMenu></div>
+                    <div class="form-field"><p:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento"/><p:calendar id="fechaNacimiento" value="#{usuariosConCreditoControllerWeb.usuarioSeleccionado.fechaNacimiento}" pattern="dd/MM/yyyy" mask="true"/></div>
+                    <div class="form-field"><p:outputLabel for="contrasena" value="Contraseña"/><p:password id="contrasena" value="#{usuariosConCreditoControllerWeb.usuarioSeleccionado.contrasena}" required="true"/></div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalUsuario').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{usuariosConCreditoControllerWeb.guardarUsuario}"
+                                     update=":formulario-usuarios:panel-usuarios :formulario-usuarios:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalUsuario').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarUsuario" modal="true" showEffect="fade" width="400" responsive="true">
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>
+                            ¿Está seguro de eliminar a <h:outputText value="'#{usuariosConCreditoControllerWeb.usuarioSeleccionado.nombre} #{usuariosConCreditoControllerWeb.usuarioSeleccionado.apellido}'" style="font-weight: bold;"/>?
+                        </span>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary" onclick="PF('ventanaEliminarUsuario').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                     actionListener="#{usuariosConCreditoControllerWeb.eliminarUsuario}"
+                                     oncomplete="PF('ventanaEliminarUsuario').hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

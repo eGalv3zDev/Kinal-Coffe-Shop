@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Pedidos</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-pedidos">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header"><h1>Gestión de Pedidos</h1></div>
+
+            <div class="action-toolbar" style="display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra los pedidos del sistema</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <p:button value="Volver al Menú"
+                              icon="pi pi-arrow-left"
+                              outcome="menu"
+                              styleClass="ui-button-danger"/>
+                    <p:commandButton value="Nuevo Pedido"
+                                     icon="pi pi-plus"
+                                     actionListener="#{pedidosControllerWeb.prepararNuevoPedido}"
+                                     update=":formulario-pedidos:ventana-pedido"
+                                     oncomplete="PF('ventanaModalPedido').show()"/>
+                </div>
+            </div>
+
+
+            <p:outputPanel id="panel-pedidos">
+                <div class="data-grid">
+                    <ui:repeat value="#{pedidosControllerWeb.pedidos}" var="pedido">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID Pedido: #{pedido.idPedido}</div>
+                                <span class="field-value">#{pedido.estado}</span>
+                            </div>
+                            <div class="card-field"><span class="field-label">Fecha:</span>
+                                <span class="field-value">
+                                    <h:outputText value="#{pedido.fecha}">
+                                        <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" />
+                                    </h:outputText>
+                                </span>
+                            </div>
+                            <div class="card-field"><span class="field-label">Cliente:</span>
+                                <span class="field-value">
+                                    <h:outputText value="#{pedido.alumno.nombre} #{pedido.alumno.apellido}" rendered="#{pedido.alumno != null}"/>
+                                    <h:outputText value="#{pedido.usuarioConCredito.nombre} #{pedido.usuarioConCredito.apellido}" rendered="#{pedido.usuarioConCredito != null}"/>
+                                </span>
+                            </div>
+                            <div class="card-field"><span class="field-label">Total:</span>
+                                <span class="field-value"><h:outputText value="#{pedido.total}"><f:convertNumber type="currency" currencySymbol="Q"/></h:outputText></span>
+                            </div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil" process="@this" update=":formulario-pedidos:ventana-pedido" oncomplete="PF('ventanaModalPedido').show()" styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{pedido}" target="#{pedidosControllerWeb.pedidoSeleccionado}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash" process="@this" styleClass="btn-delete" update=":formulario-pedidos:dialogo-eliminar-contenido" oncomplete="PF('ventanaEliminarPedido').show()">
+                                    <f:setPropertyActionListener value="#{pedido}" target="#{pedidosControllerWeb.pedidoSeleccionado}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle Pedido" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalPedido" responsive="true" width="700">
+                <p:outputPanel id="ventana-pedido" class="form-grid-col-2">
+                    <div class="form-field">
+                        <p:outputLabel for="alumno" value="Alumno (Opcional)"/>
+                        <p:selectOneMenu id="alumno" value="#{pedidosControllerWeb.pedidoSeleccionado.alumno}">
+                            <f:selectItem itemLabel="Ninguno" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{pedidosControllerWeb.listaAlumnos}" var="alu" itemLabel="#{alu.carnet} - #{alu.nombre}" itemValue="#{alu}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field">
+                        <p:outputLabel for="usuario" value="Usuario con Crédito (Opcional)"/>
+                        <p:selectOneMenu id="usuario" value="#{pedidosControllerWeb.pedidoSeleccionado.usuarioConCredito}">
+                            <f:selectItem itemLabel="Ninguno" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{pedidosControllerWeb.listaUsuarios}" var="usr" itemLabel="#{usr.correo}" itemValue="#{usr}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field"><p:outputLabel for="total" value="Total"/><p:inputNumber id="total" value="#{pedidosControllerWeb.pedidoSeleccionado.total}" required="true" symbol="Q "/></div>
+                    <div class="form-field"><p:outputLabel for="estado" value="Estado"/><p:selectOneMenu id="estado" value="#{pedidosControllerWeb.pedidoSeleccionado.estado}" required="true"><f:selectItems value="#{pedidosControllerWeb.estadosPedido}"/></p:selectOneMenu></div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalPedido').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{pedidosControllerWeb.guardarPedido}"
+                                     update=":formulario-pedidos:panel-pedidos :formulario-pedidos:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalPedido').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarPedido" modal="true" showEffect="fade" width="400" responsive="true">
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>¿Está seguro de eliminar el pedido con ID <h:outputText value="'#{pedidosControllerWeb.pedidoSeleccionado.idPedido}'" style="font-weight: bold;"/>?</span>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary" onclick="PF('ventanaEliminarPedido').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                     actionListener="#{pedidosControllerWeb.eliminarPedido}"
+                                     oncomplete="PF('ventanaEliminarPedido').hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

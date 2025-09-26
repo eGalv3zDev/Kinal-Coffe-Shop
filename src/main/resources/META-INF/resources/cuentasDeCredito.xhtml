@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Cuentas de Crédito</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-cuentas">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header"><h1>Gestión de Cuentas de Crédito</h1></div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra las cuentas de crédito de los usuarios</p>
+                </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
+                <p:commandButton value="Nueva Cuenta" icon="pi pi-plus"
+                                 actionListener="#{cuentasDeCreditoControllerWeb.prepararNuevaCuenta}"
+                                 update=":formulario-cuentas:ventana-cuenta"
+                                 oncomplete="PF('ventanaModalCuenta').show()"/>
+            </div>
+            </div>
+
+            <p:outputPanel id="panel-cuentas">
+                <div class="data-grid">
+                    <ui:repeat value="#{cuentasDeCreditoControllerWeb.cuentas}" var="cuenta">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID Cuenta: #{cuenta.idCuenta}</div>
+                            </div>
+                            <div class="card-field"><span class="field-label">Usuario:</span><span class="field-value">#{cuenta.usuarioConCredito.nombre} #{cuenta.usuarioConCredito.apellido}</span></div>
+                            <div class="card-field"><span class="field-label">Correo:</span><span class="field-value">#{cuenta.usuarioConCredito.correo}</span></div>
+                            <div class="card-field"><span class="field-label">Saldo:</span><span class="field-value"><h:outputText value="#{cuenta.saldo}"><f:convertNumber type="currency" currencySymbol="Q"/></h:outputText></span></div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil" process="@this" update=":formulario-cuentas:ventana-cuenta" oncomplete="PF('ventanaModalCuenta').show()" styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{cuenta}" target="#{cuentasDeCreditoControllerWeb.cuentaSeleccionada}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash" process="@this" styleClass="btn-delete" update=":formulario-cuentas:dialogo-eliminar-contenido" oncomplete="PF('ventanaEliminarCuenta').show()">
+                                    <f:setPropertyActionListener value="#{cuenta}" target="#{cuentasDeCreditoControllerWeb.cuentaSeleccionada}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle de Cuenta" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalCuenta" responsive="true" width="600">
+                <p:outputPanel id="ventana-cuenta" class="form-grid-col-2">
+                    <div class="form-field">
+                        <p:outputLabel for="usuario" value="Usuario con Crédito"/>
+                        <p:selectOneMenu id="usuario" value="#{cuentasDeCreditoControllerWeb.cuentaSeleccionada.usuarioConCredito}" required="true"
+                                         disabled="#{cuentasDeCreditoControllerWeb.cuentaSeleccionada.idCuenta != null}">
+                            <f:selectItem itemLabel="Seleccione un usuario" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{cuentasDeCreditoControllerWeb.listaUsuarios}" var="usr" itemLabel="#{usr.nombre} #{usr.apellido}" itemValue="#{usr}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field">
+                        <p:outputLabel for="saldo" value="Saldo"/>
+                        <p:inputNumber id="saldo" value="#{cuentasDeCreditoControllerWeb.cuentaSeleccionada.saldo}" required="true" symbol="Q "/>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalCuenta').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{cuentasDeCreditoControllerWeb.guardarCuenta}"
+                                     update=":formulario-cuentas:panel-cuentas :formulario-cuentas:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalCuenta').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarCuenta" modal="true" showEffect="fade" width="400" responsive="true">
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>¿Está seguro de eliminar la cuenta de <h:outputText value="'#{cuentasDeCreditoControllerWeb.cuentaSeleccionada.usuarioConCredito.nombre}'" style="font-weight: bold;"/>?</span>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary" onclick="PF('ventanaEliminarCuenta').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                     actionListener="#{cuentasDeCreditoControllerWeb.eliminarCuenta}"
+                                     oncomplete="PF('ventanaEliminarCuenta').hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

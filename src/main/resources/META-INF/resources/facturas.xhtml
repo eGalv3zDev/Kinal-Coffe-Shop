@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Facturas</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-facturas">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header"><h1>Gestión de Facturas</h1></div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra las facturas del sistema</p>
+                </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
+                <p:commandButton value="Nueva Factura" icon="pi pi-plus"
+                                 actionListener="#{facturasControllerWeb.prepararNuevaFactura}"
+                                 update=":formulario-facturas:ventana-factura"
+                                 oncomplete="PF('ventanaModalFactura').show()"/>
+            </div>
+            </div>
+
+            <p:outputPanel id="panel-facturas">
+                <div class="data-grid">
+                    <ui:repeat value="#{facturasControllerWeb.facturas}" var="factura">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID Factura: #{factura.idFactura}</div>
+                            </div>
+                            <div class="card-field"><span class="field-label">ID Pedido:</span><span class="field-value">#{factura.pedido.idPedido}</span></div>
+                            <div class="card-field"><span class="field-label">Total:</span><span class="field-value"><h:outputText value="#{factura.total}"><f:convertNumber type="currency" currencySymbol="Q"/></h:outputText></span></div>
+                            <div class="card-field"><span class="field-label">Fecha de Emisión:</span>
+                                <span class="field-value">
+                                    <h:outputText value="#{factura.fecha}">
+                                        <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm"/>
+                                    </h:outputText>
+                                </span>
+                            </div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil" styleClass="btn-edit" disabled="true" title="La edición de facturas no está permitida"/>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash" styleClass="btn-delete" disabled="true" title="La eliminación de facturas no está permitida"/>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle de Factura" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalFactura" responsive="true" width="600">
+                <p:outputPanel id="ventana-factura" class="form-grid-col-2">
+                    <div class="form-field">
+                        <p:outputLabel for="pedido" value="Pedido a Facturar"/>
+                        <p:selectOneMenu id="pedido" value="#{facturasControllerWeb.facturaSeleccionada.pedido}" required="true">
+                            <f:selectItem itemLabel="Seleccione un pedido" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{facturasControllerWeb.listaPedidos}" var="ped" itemLabel="Pedido ##{ped.idPedido}" itemValue="#{ped}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field">
+                        <p:outputLabel for="total" value="Total"/>
+                        <p:inputNumber id="total" value="#{facturasControllerWeb.facturaSeleccionada.total}" required="true" symbol="Q "/>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalFactura').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{facturasControllerWeb.guardarFactura}"
+                                     update=":formulario-facturas:panel-facturas :formulario-facturas:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalFactura').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+        </h:form>
+    </div>
+</h:body>
+</html>

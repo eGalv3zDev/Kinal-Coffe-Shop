@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Alumnos</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-alumnos">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header">
+                <h1>Gestión de Alumnos</h1>
+            </div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra los alumnos del sistema</p>
+                </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
+                <p:commandButton value="Nuevo Alumno" icon="pi pi-plus"
+                                 actionListener="#{alumnosControllerWeb.prepararNuevoAlumno}"
+                                 update=":formulario-alumnos:ventana-alumno"
+                                 oncomplete="PF('ventanaModalAlumno').show()"/>
+            </div>
+            </div>
+
+            <p:outputPanel id="panel-alumnos">
+                <div class="data-grid">
+                    <ui:repeat value="#{alumnosControllerWeb.alumnos}" var="alumno">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">Carnet: #{alumno.carnet}</div>
+                            </div>
+                            <div class="card-field">
+                                <span class="field-label">Nombre:</span>
+                                <span class="field-value">#{alumno.nombre} #{alumno.apellido}</span>
+                            </div>
+                            <div class="card-field">
+                                <span class="field-label">Correo:</span>
+                                <span class="field-value">#{alumno.correo}</span>
+                            </div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil"
+                                                 process="@this"
+                                                 update=":formulario-alumnos:ventana-alumno"
+                                                 oncomplete="PF('ventanaModalAlumno').show()"
+                                                 styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{alumno}" target="#{alumnosControllerWeb.alumnoSeleccionado}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash"
+                                                 styleClass="btn-delete"
+                                                 update=":formulario-alumnos:dialogo-eliminar-contenido"
+                                                 oncomplete="PF('ventanaEliminarAlumno').show()">
+                                    <f:setPropertyActionListener value="#{alumno}" target="#{alumnosControllerWeb.alumnoSeleccionado}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle Alumno" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalAlumno" responsive="true" width="600">
+                <p:outputPanel id="ventana-alumno" class="form-grid">
+                    <div class="form-field"><p:outputLabel for="nombre" value="Nombre"/><p:inputText id="nombre" value="#{alumnosControllerWeb.alumnoSeleccionado.nombre}" required="true"/></div>
+                    <div class="form-field"><p:outputLabel for="apellido" value="Apellido"/><p:inputText id="apellido" value="#{alumnosControllerWeb.alumnoSeleccionado.apellido}" required="true"/></div>
+                    <div class="form-field"><p:outputLabel for="carnet" value="Carnet"/><p:inputText id="carnet" value="#{alumnosControllerWeb.alumnoSeleccionado.carnet}" required="true"/></div>
+                    <div class="form-field"><p:outputLabel for="correo" value="Correo Electrónico"/><p:inputText id="correo" value="#{alumnosControllerWeb.alumnoSeleccionado.correo}" required="true"/></div>
+                    <div class="form-field"><p:outputLabel for="genero" value="Género"/><p:selectOneMenu id="genero" value="#{alumnosControllerWeb.alumnoSeleccionado.genero}" required="true"><f:selectItems value="#{alumnosControllerWeb.generos}"/></p:selectOneMenu></div>
+                    <div class="form-field"><p:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento"/><p:calendar id="fechaNacimiento" value="#{alumnosControllerWeb.alumnoSeleccionado.fechaNacimiento}" pattern="dd/MM/yyyy" mask="true"/></div>
+                    <div class="form-field"><p:outputLabel for="contrasena" value="Contraseña"/><p:password id="contrasena" value="#{alumnosControllerWeb.alumnoSeleccionado.contrasena}" required="true"/></div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalAlumno').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{alumnosControllerWeb.guardarAlumno}"
+                                     update=":formulario-alumnos:panel-alumnos :formulario-alumnos:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalAlumno').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarAlumno" modal="true" showEffect="fade" width="400" responsive="true">
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>
+                            ¿Está seguro de eliminar a <h:outputText value="'#{alumnosControllerWeb.alumnoSeleccionado.nombre} #{alumnosControllerWeb.alumnoSeleccionado.apellido}'" style="font-weight: bold;"/>?
+                        </span>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary" onclick="PF('ventanaEliminarAlumno').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                     actionListener="#{alumnosControllerWeb.eliminarAlumno}"
+                                     oncomplete="PF('ventanaEliminarAlumno').hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

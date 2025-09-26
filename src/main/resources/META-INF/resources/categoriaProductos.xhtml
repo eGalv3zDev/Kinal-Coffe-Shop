@@ -29,10 +29,16 @@
                     <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
                     <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra las categorías de productos</p>
                 </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
                 <p:commandButton value="Nueva Categoría" icon="pi pi-plus"
                                  actionListener="#{categoriaControllerWeb.prepararNuevaCategoria}"
                                  update=":formulario-categorias:ventana-categoria"
                                  oncomplete="PF('ventanaModalCategoria').show()"/>
+            </div>
             </div>
 
             <p:outputPanel id="panel-categorias">
@@ -40,25 +46,28 @@
                     <ui:repeat value="#{categoriaControllerWeb.categorias}" var="categoria">
                         <div class="data-card">
                             <div class="card-header">
-                                <div class="card-id">ID: #{categoria.id()}</div>
+                                <div class="card-id">ID: #{categoria.idCategoria}</div>
                             </div>
                             <div class="card-field">
                                 <span class="field-label">Nombre:</span>
-                                <span class="field-value">#{categoria.name()}</span>
+                                <span class="field-value">#{categoria.nombre}</span>
                             </div>
                             <div class="card-actions">
                                 <p:commandButton value="Editar" icon="pi pi-pencil"
-                                                 actionListener="#{categoriaControllerWeb.prepararEdicion(categoria)}"
+                                                 process="@this"
                                                  update=":formulario-categorias:ventana-categoria"
                                                  oncomplete="PF('ventanaModalCategoria').show()"
-                                                 styleClass="btn-edit"/>
+                                                 styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{categoria}"
+                                                                 target="#{categoriaControllerWeb.categoriaSeleccionada}"/>
+                                </p:commandButton>
 
                                 <p:commandButton value="Eliminar" icon="pi pi-trash"
                                                  styleClass="btn-delete"
-                                                 actionListener="#{categoriaControllerWeb.prepararParaEliminar(categoria)}"
-                                                 oncomplete="PF('ventanaEliminarCategoria').show()"
                                                  update=":formulario-categorias:dialogo-eliminar-contenido"
-                                                 process="@this">
+                                                 oncomplete="PF('ventanaEliminarCategoria').show()">
+                                    <f:setPropertyActionListener value="#{categoria}"
+                                                                 target="#{categoriaControllerWeb.categoriaSeleccionada}"/>
                                 </p:commandButton>
                             </div>
                         </div>
@@ -78,45 +87,33 @@
                     </div>
                 </p:outputPanel>
                 <f:facet name="footer">
-                    <div style="display: flex; gap: 1rem; padding: 1rem; justify-content: flex-end;">
-                        <p:commandButton value="Cancelar" icon="pi pi-times"
-                                         onclick="PF('ventanaModalCategoria').hide()"
-                                         styleClass="btn-secondary" type="button"/>
-                        <p:commandButton value="Guardar" icon="pi pi-check"
-                                         actionListener="#{categoriaControllerWeb.guardarCategoria}"
-                                         update=":formulario-categorias:panel-categorias :formulario-categorias:mensaje-emergente"
-                                         oncomplete="if (!args.validationFailed) PF('ventanaModalCategoria').hide()"/>
-                    </div>
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalCategoria').hide()"
+                                     styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{categoriaControllerWeb.guardarCategoria}"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalCategoria').hide()"/>
                 </f:facet>
             </p:dialog>
-            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarCategoria"
-                      modal="true" showEffect="fade" width="400" responsive="true">
 
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarCategoria" modal="true" showEffect="fade"
+                      width="400" responsive="true">
                 <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
                     <div class="flex align-items-center">
                         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
                         <span>
-                ¿Está seguro de que desea eliminar la categoría <h:outputText
-                                value="'#{categoriaControllerWeb.categoriaParaEliminar.name()}'"
+                            ¿Está seguro de que desea eliminar la categoría <h:outputText
+                                value="'#{categoriaControllerWeb.categoriaSeleccionada.nombre}'"
                                 style="font-weight: bold;"/>?
-            </span>
+                        </span>
                     </div>
                 </p:outputPanel>
-
                 <f:facet name="footer">
-                    <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-                        <p:commandButton value="No, cancelar" icon="pi pi-times"
-                                         styleClass="ui-button-secondary"
-                                         onclick="PF('ventanaEliminarCategoria').hide()"
-                                         type="button"/>
-
-                        <p:commandButton value="Sí, eliminar" icon="pi pi-check"
-                                         styleClass="ui-button-danger"
-                                         actionListener="#{categoriaControllerWeb.eliminarCategoria}"
-                                         process="@this"
-                                         update=":formulario-categorias:panel-categorias :formulario-categorias:mensaje-emergente"
-                                         oncomplete="PF('ventanaEliminarCategoria').hide()"/>
-                    </div>
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary"
+                                     onclick="PF('ventanaEliminarCategoria').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check"
+                                     styleClass="ui-button-danger"
+                                     actionListener="#{categoriaControllerWeb.eliminarCategoria}"
+                                     oncomplete="PF('ventanaEliminarCategoria').hide()"/>
                 </f:facet>
             </p:dialog>
         </h:form>

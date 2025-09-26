@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <f:facet name="first">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </f:facet>
+    <title>Gestión de Pagos</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+    <h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <h:form id="formulario-pagos">
+            <p:growl id="mensaje-emergente" showDetail="true" life="5000"/>
+
+            <div class="page-header"><h1>Gestión de Pagos</h1></div>
+
+            <div class="action-toolbar">
+                <div>
+                    <h3 style="margin: 0; color: #e0e0e0;">Panel de Control</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: #9ca3af;">Administra los pagos del sistema</p>
+                </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <p:button value="Volver al Menú"
+                          icon="pi pi-arrow-left"
+                          outcome="menu"
+                          styleClass="ui-button-danger"/>
+                <p:commandButton value="Nuevo Pago" icon="pi pi-plus"
+                                 actionListener="#{pagosControllerWeb.prepararNuevoPago}"
+                                 update=":formulario-pagos:ventana-pago"
+                                 oncomplete="PF('ventanaModalPago').show()"/>
+            </div>
+            </div>
+
+            <p:outputPanel id="panel-pagos">
+                <div class="data-grid">
+                    <ui:repeat value="#{pagosControllerWeb.pagos}" var="pago">
+                        <div class="data-card">
+                            <div class="card-header">
+                                <div class="card-id">ID Pago: #{pago.idPago}</div>
+                            </div>
+                            <div class="card-field"><span class="field-label">ID Pedido:</span><span class="field-value">#{pago.pedido.idPedido}</span></div>
+                            <div class="card-field"><span class="field-label">Tipo:</span><span class="field-value">#{pago.tipo}</span></div>
+                            <div class="card-field"><span class="field-label">Monto:</span><span class="field-value"><h:outputText value="#{pago.monto}"><f:convertNumber type="currency" currencySymbol="Q"/></h:outputText></span></div>
+                            <div class="card-field"><span class="field-label">Fecha:</span><span class="field-value"><h:outputText value="#{pago.fecha}"><f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm" /></h:outputText></span></div>
+                            <div class="card-actions">
+                                <p:commandButton value="Editar" icon="pi pi-pencil" process="@this" update=":formulario-pagos:ventana-pago" oncomplete="PF('ventanaModalPago').show()" styleClass="btn-edit">
+                                    <f:setPropertyActionListener value="#{pago}" target="#{pagosControllerWeb.pagoSeleccionado}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Eliminar" icon="pi pi-trash" process="@this" styleClass="btn-delete" update=":formulario-pagos:dialogo-eliminar-contenido" oncomplete="PF('ventanaEliminarPago').show()">
+                                    <f:setPropertyActionListener value="#{pago}" target="#{pagosControllerWeb.pagoSeleccionado}"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </p:outputPanel>
+
+            <p:dialog header="Detalle de Pago" showEffect="fade" modal="true"
+                      widgetVar="ventanaModalPago" responsive="true" width="600">
+                <p:outputPanel id="ventana-pago" class="form-grid-col-2">
+                    <div class="form-field">
+                        <p:outputLabel for="pedido" value="Pedido"/>
+                        <p:selectOneMenu id="pedido" value="#{pagosControllerWeb.pagoSeleccionado.pedido}" required="true">
+                            <f:selectItem itemLabel="Seleccione un pedido" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{pagosControllerWeb.listaPedidos}" var="ped" itemLabel="Pedido ##{ped.idPedido}" itemValue="#{ped}"/>
+                            <f:converter converterId="omnifaces.SelectItemsConverter" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field">
+                        <p:outputLabel for="tipo" value="Tipo de Pago"/>
+                        <p:selectOneMenu id="tipo" value="#{pagosControllerWeb.pagoSeleccionado.tipo}" required="true">
+                            <f:selectItems value="#{pagosControllerWeb.tiposPago}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="form-field full-width">
+                        <p:outputLabel for="monto" value="Monto"/>
+                        <p:inputNumber id="monto" value="#{pagosControllerWeb.pagoSeleccionado.monto}" required="true" symbol="Q "/>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalPago').hide()" styleClass="btn-secondary" type="button"/>
+                    <p:commandButton value="Guardar" icon="pi pi-check"
+                                     actionListener="#{pagosControllerWeb.guardarPago}"
+                                     update=":formulario-pagos:panel-pagos :formulario-pagos:mensaje-emergente"
+                                     oncomplete="if (!args.validationFailed) PF('ventanaModalPago').hide()"/>
+                </f:facet>
+            </p:dialog>
+
+            <p:dialog header="Confirmar Eliminación" widgetVar="ventanaEliminarPago" modal="true" showEffect="fade" width="400" responsive="true">
+                <p:outputPanel id="dialogo-eliminar-contenido" style="padding: 1rem 0;">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem; color: #FFC107;"></i>
+                        <span>¿Está seguro de eliminar el pago con ID <h:outputText value="'#{pagosControllerWeb.pagoSeleccionado.idPago}'" style="font-weight: bold;"/>?</span>
+                    </div>
+                </p:outputPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="No, cancelar" icon="pi pi-times" styleClass="ui-button-secondary" onclick="PF('ventanaEliminarPago').hide()" type="button"/>
+                    <p:commandButton value="Sí, eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                     actionListener="#{pagosControllerWeb.eliminarPago}"
+                                     oncomplete="PF('ventanaEliminarPago').hide()"/>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

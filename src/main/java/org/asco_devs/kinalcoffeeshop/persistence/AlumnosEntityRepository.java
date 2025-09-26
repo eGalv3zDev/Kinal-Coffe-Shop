@@ -67,4 +67,9 @@ public class AlumnosEntityRepository implements AlumnosRepository {
         }
         crudAlumnosEntity.deleteById(idAlumno);
     }
+
+    @Override
+    public Optional<Alumnos> buscarPorCorreo(String correo) {
+        return crudAlumnosEntity.findByCorreo(correo);
+    }
 }
