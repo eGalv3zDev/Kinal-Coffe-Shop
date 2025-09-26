@@ -49,7 +49,7 @@
                             <div class="card-field"><span class="field-label">Cuenta:</span><span class="field-value">#{historial.cuenta.usuarioConCredito.nombre}</span></div>
                             <div class="card-field"><span class="field-label">Movimiento:</span><span class="field-value">#{historial.tipoMovimiento}</span></div>
                             <div class="card-field"><span class="field-label">Monto:</span><span class="field-value"><h:outputText value="#{historial.monto}"><f:convertNumber type="currency" currencySymbol="Q"/></h:outputText></span></div>
-                            <div class="card-field"><span class="field-label">Fecha:</span><span class="field-value"><h:outputText value="#{historial.fecha}"><f:convertDateTime pattern="dd/MM/yyyy HH:mm"/></h:outputText></span></div>
+                            <div class="card-field"><span class="field-label">Fecha:</span><span class="field-value"><h:outputText value="#{historial.fecha}"><f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy HH:mm"/></h:outputText></span></div>
                             <div class="card-actions">
                                 <p:commandButton value="Editar" icon="pi pi-pencil" process="@this" update=":formulario-historial:ventana-historial" oncomplete="PF('ventanaModalHistorial').show()" styleClass="btn-edit">
                                     <f:setPropertyActionListener value="#{historial}" target="#{historialCreditosControllerWeb.historialSeleccionado}"/>
@@ -97,7 +97,7 @@
                     <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ventanaModalHistorial').hide()" styleClass="btn-secondary" type="button"/>
                     <p:commandButton value="Guardar" icon="pi pi-check"
                                      actionListener="#{historialCreditosControllerWeb.guardarRegistro}"
-                                     update=":formulario-historial:panel-historial :formulario-historial:mensaje-emergente"
+                                         update=":formulario-historial:panel-historial :formulario-historial:mensaje-emergente"
                                      oncomplete="if (!args.validationFailed) PF('ventanaModalHistorial').hide()"/>
                 </f:facet>
             </p:dialog>
